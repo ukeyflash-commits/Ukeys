@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>UKeys — админка</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; max-width: 1200px; margin: 30px auto; padding: 0 20px; color: #333; }
+        h1   { font-size: 22px; margin: 0 0 6px; }
+        .sub { color: #666; font-size: 13px; margin-bottom: 20px; }
+
+        .toolbar { display: flex; gap: 8px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
+        .toolbar button {
+            padding: 8px 14px; font-size: 14px; border: 1px solid #ccc;
+            background: #fff; border-radius: 4px; cursor: pointer;
+        }
+        .toolbar button.active { background: #667eea; color: #fff; border-color: #667eea; }
+        .toolbar .right { margin-left: auto; color: #666; font-size: 13px; }
+
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        th, td { padding: 10px 8px; border-bottom: 1px solid #eee; text-align: left; vertical-align: top; }
+        th { background: #f7f7fb; font-weight: 600; white-space: nowrap; }
+        tr:hover td { background: #fafafa; }
+
+        .badge { display: inline-block; padding: 3px 9px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+        .badge.ожидает   { background: #fff3cd; color: #856404; }
+        .badge.оплачен   { background: #cce5ff; color: #004085; }
+        .badge.отправлен { background: #d4edda; color: #155724; }
+
+        .btn-attach {
+            padding: 6px 12px; font-size: 13px; border: none; border-radius: 4px;
+            background: #28a745; color: #fff; cursor: pointer;
+        }
+        .btn-attach:hover { background: #218838; }
+        .btn-attach:disabled { background: #ccc; cursor: default; }
+
+        .file-url { font-size: 12px; color: #0066cc; word-break: break-all; max-width: 220px; display: inline-block; }
+        .muted { color: #999; font-size: 12px; }
+
+        /* модальное окно */
+        .modal-bg {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5);
+            z-index: 100; align-items: center; justify-content: center;
+        }
+        .modal-bg.show { display: flex; }
+        .modal {
+            background: #fff; border-radius: 8px; padding: 24px; width: 520px; max-width: 92vw;
+            box-shadow: 0 10px 40px rgba(0,0,0,.3);
+        }
+        .modal h2 { margin: 0 0 16px; font-size: 18px; }
+        .modal label { display: block; margin-top: 12px; font-size: 13px; font-weight: 600; }
+        .modal input { padding: 10px; width: 100%; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; margin-top: 4px; }
+        .modal .actions { display: flex; gap: 8px; margin-top: 20px; justify-content: flex-end; }
+        .modal .actions button {
+            padding: 9px 16px; font-size: 14px; border: none; border-radius: 4px; cursor: pointer;
+        }
+        .modal .actions .cancel  { background: #eee; color: #333; }
+        .modal .actions .confirm { background: #28a745; color: #fff; }
+        .modal .actions .confirm:disabled { background: #aaa; cursor: not-allowed; }
+        .modal .result { margin-top: 12px; padding: 10px; border-radius: 4px; font-size: 13px; display: none; white-space: pre-wrap; }
+        .modal .result.ok  { background: #d4edda; color: #155724; display: block; }
+        .modal .result.err { background: #f8d7da; color: #721c24; display: block; }
+    </style>
+</head>
+<body>
+
+    <h1>UKeys —наши  заказы(ИнШаАллах!)</h1>
+    <div class="sub">Кнопка «Прикрепить» доступна для заказов со статусом <b>ожидает</b> или <b>оплачен</b> без ссылки.</div>
+
+    <div class="toolbar">
+        <button data-filter=""          class="active">Все</button>
+        <button data-filter="ожидает">Ожидает</button>
+        <button data-filter="оплачен">Оплачен</button>
+        <button data-filter="отправлен">Отправлен</button>
+        <button onclick="loadOrders()" style="margin-left:auto;">🔄 Обновить</button>
+        <span class="right" id="counter"></span>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Дата</th>
+                <th>Клиент</th>
+                <th>Сумма</th>
+                <th>Статус</th>
+                <th>DropMeFiles-ссылка</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+            <tr><td colspan="7" class="muted" style="text-align:center; padding:30px;">Загрузка…</td></tr>
+        </tbody>
+    </table>
+
+    <!-- Модальное окно прикрепления ссылки -->
+    <div class="modal-bg" id="modalBg">
+        <div class="modal">
+            <h2>Прикрепить DropMeFiles-ссылку</h2>
+            <div class="muted" id="modalOrderInfo"></div>
+
+            <label for="modalUrl">Ссылка (начинается с https://)</label>
+            <input id="modalUrl" type="text" placeholder="https://dropmefiles.com/abcd1234" autofocus>
+
+            <div id="modalResult" class="result"></div>
+
+            <div class="actions">
+                <button class="cancel" onclick="closeModal()">Отмена</button>
+                <button class="confirm" id="modalConfirm" onclick="confirmAttach()">Прикрепить</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+//25.10.2026 исправление админки
+// ── состояние ─────────────────────────────────────────────
+let currentFilter = '';
+let currentInvId  = null;
+
+// ── загрузка списка ───────────────────────────────────────
+async function loadOrders() {
+    const tbody = document.getElementById('tbody');
+    tbody.innerHTML = '<tr><td colspan="7" class="muted" style="text-align:center; padding:30px;">Загрузка…</td></tr>';
+
+    try {
+        const url = '/api/admin/orders' + (currentFilter ? '?status=' + encodeURIComponent(currentFilter) : '');
+        const resp = await fetch(url);
+        const data = await resp.json();
+
+        if (!resp.ok) throw new Error(data.error || 'Ошибка загрузки');
+
+        renderOrders(data.orders);
+        document.getElementById('counter').textContent = `Всего: ${data.count}`;
+    } catch (e) {
+        tbody.innerHTML = `<tr><td colspan="7" class="muted" style="color:#c00; text-align:center; padding:20px;">❌ ${e.message}</td></tr>`;
+    }
+}
+
+function renderOrders(orders) {
+    const tbody = document.getElementById('tbody');
+    if (!orders.length) {
+        tbody.innerHTML = '<tr><td colspan="7" class="muted" style="text-align:center; padding:30px;">Нет заказов</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = orders.map(o => {
+        const canAttach = (o.status === 'ожидает' || (o.status === 'оплачен' && !o.file_url));
+        const urlCell = o.file_url
+            ? `<a class="file-url" href="${escapeHtml(o.file_url)}" target="_blank" rel="noopener">${escapeHtml(o.file_url)}</a>`
+            : '<span class="muted">—</span>';
+
+        // ✅ data-* атрибуты + передаём сам элемент через this
+        const attachBtn = canAttach
+            ? `<button class="btn-attach"
+                       data-invid="${o.inv_id}"
+                       data-name="${escapeHtml(o.name)}"
+                       data-email="${escapeHtml(o.email)}"
+                       onclick="openAttach(this)">Прикрепить</button>`
+            : '';
+
+        return `
+            <tr>
+                <td><code>${o.inv_id}</code></td>
+                <td class="muted">${formatDate(o.created_at)}</td>
+                <td>
+                    <div><b>${escapeHtml(o.name)}</b></div>
+                    <div class="muted">${escapeHtml(o.email)}</div>
+                    <div class="muted">${escapeHtml(o.phone)}</div>
+                </td>
+                <td><b>${Number(o.total).toLocaleString('ru-RU')} ₽</b></td>
+                <td><span class="badge ${o.status}">${o.status}</span></td>
+                <td>${urlCell}</td>
+                <td>${attachBtn}</td>
+            </tr>
+        `;
+    }).join('');
+}
+
+// ── модальное окно ────────────────────────────────────────
+function openAttach(btn) {
+    // ✅ читаем данные из data-* атрибутов кнопки
+    const invId = Number(btn.dataset.invid);
+    const name  = btn.dataset.name;
+    const email = btn.dataset.email;
+
+    currentInvId = invId;
+
+    document.getElementById('modalOrderInfo').textContent =
+        `Заказ #${invId} — ${name} (${email})`;
+    document.getElementById('modalUrl').value = '';
+
+    const result = document.getElementById('modalResult');
+    result.className = 'result';
+    result.textContent = '';               // ✅ было classContent
+
+    document.getElementById('modalConfirm').disabled = false;
+    document.getElementById('modalBg').classList.add('show');
+    setTimeout(() => document.getElementById('modalUrl').focus(), 100);
+}
+
+function closeModal() {
+    document.getElementById('modalBg').classList.remove('show');
+    currentInvId = null;
+}
+
+async function confirmAttach() {
+    const fileUrl = document.getElementById('modalUrl').value.trim();
+    const box     = document.getElementById('modalResult');
+    const btn     = document.getElementById('modalConfirm');
+
+    if (!/^https?:\/\//i.test(fileUrl)) {
+        box.className = 'result err';
+        box.textContent = '❌ Ссылка должна начинаться с http:// или https://';
+        return;
+    }
+
+    if (!currentInvId) {
+        box.className = 'result err';
+        box.textContent = '❌ Не выбран заказ. Закройте окно и попробуйте снова.';
+        return;
+    }
+
+    btn.disabled = true;
+    box.className = 'result';
+    box.textContent = 'Отправка…';
+
+    try {
+        const resp = await fetch('/api/admin/attach-link', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ invId: currentInvId, fileUrl }),
+        });
+        const data = await resp.json();
+
+        if (resp.ok) {
+            box.className = 'result ok';
+            box.textContent = `✅ Ссылка прикреплена.\nЧерез ≤60 сек письмо уйдёт клиенту.`;
+            setTimeout(() => { closeModal(); loadOrders(); }, 1200);
+        } else {
+            box.className = 'result err';
+            box.textContent = `❌ ${data.error || 'Ошибка'}`;
+            btn.disabled = false;
+        }
+    } catch (e) {
+        box.className = 'result err';
+        box.textContent = `❌ Ошибка сети: ${e.message}`;
+        btn.disabled = false;
+    }
+}
+
+// ── утилиты ───────────────────────────────────────────────
+function escapeHtml(s) {
+    return String(s ?? '').replace(/[&<>"']/g, c => ({
+        '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[c]));
+}
+
+function formatDate(s) {
+    if (!s) return '—';
+    const iso = s.includes('T') ? s : s.replace(' ', 'T') + 'Z';
+    const d = new Date(iso);
+    if (isNaN(d)) return s;
+    return d.toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit' });
+}
+
+// ── фильтры ───────────────────────────────────────────────
+document.querySelectorAll('.toolbar button[data-filter]').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.toolbar button[data-filter]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        loadOrders();
+    });
+});
+
+// ── автообновление раз в 30 сек ───────────────────────────
+setInterval(loadOrders, 30 * 1000);
+
+// ── старт ─────────────────────────────────────────────────
+loadOrders();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог программ Kali Linux</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            color: #212529;
+            .glass{
+                
+            }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #1a1a1a;
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .tool-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-left: 5px solid #007bff;
+            display: flex;
+            flex-direction: column;
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        .tool-name {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #007bff;
+            margin-top: 0;
+            margin-bottom: 10px;
+            word-break: break-word;
+        }
+        .tool-description {
+            font-size: 0.95em;
+            line-height: 1.6;
+            color: #495057;
+            flex-grow: 1;
+        }
+        .tool-description strong {
+            color: #212529;
+        }
+        .tool-example {
+            background-color: #e9ecef;
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85em;
+            color: #212529;
+            margin-top: 15px;
+            border: 1px solid #ced4da;
+            word-break: break-all;
+            white-space: pre-wrap; /* Позволяет переносить длинные команды */
+        }
+        .tool-category {
+            display: inline-block;
+            background-color: #e7f3ff;
+            color: #0056b3;
+            font-size: 0.7em;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 12px;
+            margin-top: 10px;
+            align-self: flex-start;
+        }
+        .badge {
+            display: inline-block;
+            background-color: #6c757d;
+            color: white;
+            font-size: 0.65em;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 5px;
+        }
+        @media (max-width: 600px) {
+            .tool-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛠️ Каталог программ из списка (Kali Linux)</h1>
+        <p style="text-align: center; color: #6c757d;">Ниже представлены описания и примеры использования для основных инструментов.</p>
+        <div class="tool-grid">
+        
+        <!-- Программы сгенерированы на основе списка -->
+        
+        <!-- 0trace -->
+        <div class="tool-card">
+            <div class="tool-name">0trace</div>
+            <div class="tool-description"><strong>Назначение:</strong> traceroute tool that uses existing TCP connections to map a network path. <br> <strong>Использование:</strong> Позволяет выполнить трассировку маршрута, используя уже установленные TCP-соединения, что может помочь обойти некоторые фильтры.</div>
+            <div class="tool-example">0trace eth0 192.168.1.1 80</div>
+            <span class="tool-category">🔍 Сетевые утилиты</span>
+        </div>
+
+        <!-- 7zip -->
+        <div class="tool-card">
+            <div class="tool-name">7zip</div>
+            <div class="tool-description"><strong>Назначение:</strong> 7-Zip file archiver with a high compression ratio. <br> <strong>Использование:</strong> Работа с архивами (7z, zip, tar, gz и др.).</div>
+            <div class="tool-example">7z x archive.7z -ooutput_dir</div>
+            <span class="tool-category">📁 Файловые утилиты</span>
+        </div>
+
+        <!-- aircrack-ng -->
+        <div class="tool-card">
+            <div class="tool-name">aircrack-ng</div>
+            <div class="tool-description"><strong>Назначение:</strong> Wireless WEP/WPA cracking. Комплект инструментов для аудита безопасности Wi-Fi сетей. <br> <strong>Использование:</strong> Перехват пакетов, взлом WEP/WPA ключей.</div>
+            <div class="tool-example">aircrack-ng -w wordlist.txt -b 00:11:22:33:44:55 capture-01.cap</div>
+            <span class="tool-category">📶 Wi-Fi Аудит</span>
+        </div>
+
+        <!-- amap -->
+        <div class="tool-card">
+            <div class="tool-name">amap</div>
+            <div class="tool-description"><strong>Назначение:</strong> Next-generation scanning tool for application protocol identification. <br> <strong>Использование:</strong> Определяет работающие сервисы и их версии, даже если они используют нестандартные порты.</div>
+            <div class="tool-example">amap -bq 192.168.1.1 21-25</div>
+            <span class="tool-category">🔍 Сканирование</span>
+        </div>
+
+        <!-- amass -->
+        <div class="tool-card">
+            <div class="tool-name">amass</div>
+            <div class="tool-description"><strong>Назначение:</strong> In-depth DNS Enumeration and network mapping. <br> <strong>Использование:</strong> Сбор информации о поддоменах и внешней поверхности атаки.</div>
+            <div class="tool-example">amass enum -d example.com</div>
+            <span class="tool-category">🌐 Разведка</span>
+        </div>
+
+        <!-- apktool -->
+        <div class="tool-card">
+            <div class="tool-name">apktool</div>
+            <div class="tool-description"><strong>Назначение:</strong> Tool for reverse engineering Android APK files. <br> <strong>Использование:</strong> Декодирование ресурсов и манифеста, пересборка APK.</div>
+            <div class="tool-example">apktool d app.apk</div>
+            <span class="tool-category">📱 Реверс-инжиниринг</span>
+        </div>
+
+        <!-- armitage -->
+        <div class="tool-card">
+            <div class="tool-name">armitage</div>
+            <div class="tool-description"><strong>Назначение:</strong> Cyber attack management tool for Metasploit. <br> <strong>Использование:</strong> Графический интерфейс для управления атаками, визуализация целей и автоматизация.</div>
+            <div class="tool-example">armitage</div>
+            <span class="tool-category">💻 Эксплуатация</span>
+        </div>
+
+        <!-- arp-scan -->
+        <div class="tool-card">
+            <div class="tool-name">arp-scan</div>
+            <div class="tool-description"><strong>Назначение:</strong> ARP scanning and fingerprinting tool. <br> <strong>Использование:</strong> Обнаружение устройств в локальной сети с помощью ARP-запросов.</div>
+            <div class="tool-example">arp-scan --local</div>
+            <span class="tool-category">🔍 Сканирование</span>
+        </div>
+
+        <!-- binwalk -->
+        <div class="tool-card">
+            <div class="tool-name">binwalk</div>
+            <div class="tool-description"><strong>Назначение:</strong> Tool library for analyzing, reverse engineering, and extracting firmware images. <br> <strong>Использование:</strong> Поиск встроенных файлов и данных в бинарных образах.</div>
+            <div class="tool-example">binwalk -e firmware.bin</div>
+            <span class="tool-category">🔧 Анализ</span>
+        </div>
+
+        <!-- bloodhound.py -->
+        <div class="tool-card">
+            <div class="tool-name">bloodhound.py</div>
+            <div class="tool-description"><strong>Назначение:</strong> Python ingestor for BloodHound, an Active Directory attack path graphing tool. <br> <strong>Использование:</strong> Сбор данных об AD для визуализации путей атак.</div>
+            <div class="tool-example">bloodhound-python -d domain.local -u user -p pass -c all</div>
+            <span class="tool-category">👥 Active Directory</span>
+        </div>
+
+        <!-- burpsuite -->
+        <div class="tool-card">
+            <div class="tool-name">burpsuite</div>
+            <div class="tool-description"><strong>Назначение:</strong> Platform for security testing of web applications. <br> <strong>Использование:</strong> Перехват и модификация HTTP/HTTPS трафика, сканирование уязвимостей.</div>
+            <div class="tool-example">burpsuite</div>
+            <span class="tool-category">🌐 Веб-безопасность</span>
+        </div>
+
+        <!-- crackmapexec -->
+        <div class="tool-card">
+            <div class="tool-name">crackmapexec</div>
+            <div class="tool-description"><strong>Назначение:</strong> Swiss army knife for pentesting networks, often used with SMB, LDAP, WinRM. <br> <strong>Использование:</strong> Перебор паролей, выполнение команд, сбор информации в доменах Windows.</div>
+            <div class="tool-example">crackmapexec smb 192.168.1.0/24 -u user -p password</div>
+            <span class="tool-category">👥 Active Directory</span>
+        </div>
+
+        <!-- crunch -->
+        <div class="tool-card">
+            <div class="tool-name">crunch</div>
+            <div class="tool-description"><strong>Назначение:</strong> Tool for creating wordlists based on a character set and length. <br> <strong>Использование:</strong> Генерация словарей для перебора паролей.</div>
+            <div class="tool-example">crunch 8 8 0123456789 -o wordlist.txt</div>
+            <span class="tool-category">🔐 Взлом паролей</span>
+        </div>
+
+        <!-- dirb -->
+        <div class="tool-card">
+            <div class="tool-name">dirb</div>
+            <div class="tool-description"><strong>Назначение:</strong> URL bruteforcing tool to find hidden directories and files on web servers. <br> <strong>Использование:</strong> Перебор каталогов и файлов на веб-сервере.</div>
+            <div class="tool-example">dirb http://example.com /usr/share/wordlists/dirb/common.txt</div>
+            <span class="tool-category">🌐 Веб-безопасность</span>
+        </div>
+
+        <!-- dnsenum -->
+        <div class="tool-card">
+            <div class="tool-name">dnsenum</div>
+            <div class="tool-description"><strong>Назначение:</strong> Tool to enumerate DNS information about a domain. <br> <strong>Использование:</strong> Поиск поддоменов, DNS-записей, попытка зонной передачи.</div>
+            <div class="tool-example">dnsenum example.com</div>
+            <span class="tool-category">🌐 Разведка</span>
+        </div>
+
+        <!-- dsniff -->
+        <div class="tool-card">
+            <div class="tool-name">dsniff</div>
+            <div class="tool-description"><strong>Назначение:</strong> Various tools to sniff and intercept network traffic (passwords, emails). <br> <strong>Использование:</strong> Пассивный перехват и анализ сетевого трафика.</div>
+            <div class="tool-example">dsniff -i eth0</div>
+            <span class="tool-category">👂 Перехват трафика</span>
+        </div>
+
+        <!-- enum4linux -->
+        <div class="tool-card">
+            <div class="tool-name">enum4linux</div>
+            <div class="tool-description"><strong>Назначение:</strong> Enumerates information from Windows and Samba systems. <br> <strong>Использование:</strong> Сбор информации о домене, пользователях, шаринг-ресурсах и политиках.</div>
+            <div class="tool-example">enum4linux -a 192.168.1.100</div>
+            <span class="tool-category">👥 Active Directory</span>
+        </div>
+
+        <!-- ettercap -->
+        <div class="tool-card">
+            <div class="tool-name">ettercap</div>
+            <div class="tool-description"><strong>Назначение:</strong> Multipurpose sniffer/interceptor/logger for switched LAN. <br> <strong>Использование:</strong> ARP-спуфинг, перехват трафика, внедрение пакетов в Man-in-the-Middle атаках.</div>
+            <div class="tool-example">ettercap -T -M arp:remote /192.168.1.1// /192.168.1.10//</div>
+            <span class="tool-category">👂 Перехват трафика</span>
+        </div>
+
+        <!-- evil-winrm -->
+        <div class="tool-card">
+            <div class="tool-name">evil-winrm</div>
+            <div class="tool-description"><strong>Назначение:</strong> The ultimate WinRM shell for pentesting. <br> <strong>Использование:</strong> Подключение к удаленным Windows системам через WinRM для выполнения команд.</div>
+            <div class="tool-example">evil-winrm -i 192.168.1.100 -u user -p password</div>
+            <span class="tool-category">💻 Эксплуатация</span>
+        </div>
+
+        <!-- exploitdb -->
+        <div class="tool-card">
+            <div class="tool-name">exploitdb</div>
+            <div class="tool-description"><strong>Назначение:</strong> Searchable Exploit Database (searchsploit). <br> <strong>Использование:</strong> Поиск готовых эксплоитов для известных уязвимостей.</div>
+            <div class="tool-example">searchsploit windows 10</div>
+            <span class="tool-category">💻 Эксплуатация</span>
+        </div>
+
+        <!-- ffuf -->
+        <div class="tool-card">
+            <div class="tool-name">ffuf</div>
+            <div class="tool-description"><strong>Назначение:</strong> Fast web fuzzer written in Go. <br> <strong>Использование:</strong> Перебор директорий, файлов, параметров и многое другое.</div>
+            <div class="tool-example">ffuf -u http://example.com/FUZZ -w /path/to/wordlist</div>
+            <span class="tool-category">🌐 Веб-безопасность</span>
+        </div>
+
+        <!-- gdb -->
+        <div class="tool-card">
+            <div class="tool-name">gdb</div>
+            <div class="tool-description"><strong>Назначение:</strong> GNU Debugger. <br> <strong>Использование:</strong> Отладка исполняемых файлов, анализ стека, памяти и регистров.</div>
+            <div class="tool-example">gdb ./program</div>
+            <span class="tool-category">🔧 Реверс-инжиниринг</span>
+        </div>
+
+        <!-- ghidra -->
+        <div class="tool-card">
+            <div class="tool-name">ghidra</div>
+            <div class="tool-description"><strong>Назначение:</strong> Software Reverse Engineering (SRE) framework. <br> <strong>Использование:</strong> Дизассемблирование, декомпиляция и анализ бинарных файлов.</div>
+            <div class="tool-example">ghidra</div>
+            <span class="tool-category">🔧 Реверс-инжиниринг</span>
+        </div>
+
+        <!-- gobuster -->
+        <div class="tool-card">
+            <div class="tool-name">gobuster</div>
+            <div class="tool-description"><strong>Назначение:</strong> Directory/file & DNS busting tool written in Go. <br> <strong>Использование:</strong> Перебор директорий и поддоменов.</div>
+            <div class="tool-example">gobuster dir -u http://example.com -w /path/to/wordlist</div>
+            <span class="tool-category">🌐 Веб-безопасность</span>
+        </div>
+
+        <!-- hashcat -->
+        <div class="tool-card">
+            <div class="tool-name">hashcat</div>
+            <div class="tool-description"><strong>Назначение:</strong> World's fastest and most advanced password recovery utility. <br> <strong>Использование:</strong> Взлом хешей паролей (GPU-ускорение).</div>
+            <div class="tool-example">hashcat -m 0 -a 0 hash.txt wordlist.txt</div>
+            <span class="tool-category">🔐 Взлом паролей</span>
+        </div>
+
+        <!-- hydra -->
+        <div class="tool-card">
+            <div class="tool-name">hydra</div>
+            <div class="tool-description"><strong>Назначение:</strong> Very fast network logon cracker supporting many services. <br> <strong>Использование:</strong> Брутфорс паролей для SSH, FTP, HTTP, RDP и других протоколов.</div>
+            <div class="tool-example">hydra -l user -P wordlist.txt ssh://192.168.1.1</div>
+            <span class="tool-category">🔐 Взлом паролей</span>
+        </div>
+
+        <!-- john -->
+        <div class="tool-card">
+            <div class="tool-name">john</div>
+            <div class="tool-description"><strong>Назначение:</strong> Active password cracking tool (John the Ripper). <br> <strong>Использование:</strong> Взлом хешей паролей различными методами (словарная атака, брутфорс).</div>
+            <div class="tool-example">john --wordlist=wordlist.txt hash.txt</div>
+            <span class="tool-category">🔐 Взлом паролей</span>
+        </div>
+
+        <!-- kismet -->
+        <div class="tool-card">
+            <div class="tool-name">kismet</div>
+            <div class="tool-description"><strong>Назначение:</strong> Wireless network and device detector, sniffer, wardriving tool. <br> <strong>Использование:</strong> Обнаружение Wi-Fi, Bluetooth и других беспроводных сетей.</div>
+            <div class="tool-example">kismet</div>
+            <span class="tool-category">📶 Wi-Fi Аудит</span>
+        </div>
+
+        <!-- legion -->
+        <div class="tool-card">
+            <div class="tool-name">legion</div>
+            <div class="tool-description"><strong>Назначение:</strong> Semi-automated network penetration testing framework. <br> <strong>Использование:</strong> Автоматизированное сканирование и эксплуатация сетевых уязвимостей.</div>
+            <div class="tool-example">legion</div>
+            <span class="tool-category">💻 Эксплуатация</span>
+        </div>
+
+        <!-- metasploit-framework -->
+        <div class="tool-card">
+            <div class="tool-name">metasploit-framework</div>
+            <div class="tool-description"><strong>Назначение:</strong> Framework for exploit development and execution. <br> <strong>Использование:</strong> Разработка и запуск эксплоитов, управление сессиями.</div>
+            <div class="tool-example">msfconsole</div>
+            <span class="tool-category">💻 Эксплуатация</span>
+        </div>
+
+        <!-- nmap -->
+        <div class="tool-card">
+            <div class="tool-name">nmap</div>
+            <div class="tool-description"><strong>Назначение:</strong> The Network Mapper - network discovery and security auditing. <br> <strong>Использование:</strong> Сканирование портов, обнаружение ОС, версий сервисов.</div>
+            <div class="tool-example">nmap -sV -p- 192.168.1.1</div>
+            <span class="tool-category">🔍 Сканирование</span>
+        </div>
+
+        <!-- sqlmap -->
+        <div class="tool-card">
+            <div class="tool-name">sqlmap</div>
+            <div class="tool-description"><strong>Назначение:</strong> Automatic SQL injection and database takeover tool. <br> <strong>Использование:</strong> Автоматическое обнаружение и эксплуатация SQL-инъекций.</div>
+            <div class="tool-example">sqlmap -u "http://example.com/page?id=1" --dbs</div>
+            <span class="tool-category">🗄️ Веб-безопасность</span>
+        </div>
+
+        <!-- wpscan -->
+        <div class="tool-card">
+            <div class="tool-name">wpscan</div>
+            <div class="tool-description"><strong>Назначение:</strong> Black box WordPress vulnerability scanner. <br> <strong>Использование:</strong> Поиск уязвимостей, пользователей, тем и плагинов в WordPress.</div>
+            <div class="tool-example">wpscan --url http://example.com -e vp,vt,u</div>
+            <span class="tool-category">🌐 Веб-безопасность</span>
+        </div>
+
+        <!-- zaproxy -->
+        <div class="tool-card">
+            <div class="tool-name">zaproxy</div>
+            <div class="tool-description"><strong>Назначение:</strong> Testing tool for finding vulnerabilities in web applications (OWASP ZAP). <br> <strong>Использование:</strong> Перехват трафика, сканирование, fuzzing веб-приложений.</div>
+            <div class="tool-example">zap.sh</div>
+            <span class="tool-category">🌐 Веб-безопасность</span>
+        </div>
+
+        <!-- Добавление еще нескольких важных инструментов -->
+
+        <!-- tcpdump -->
+        <div class="tool-card">
+            <div class="tool-name">tcpdump</div>
+            <div class="tool-description"><strong>Назначение:</strong> Command-line network traffic analyzer. <br> <strong>Использование:</strong> Захват и фильтрация пакетов сетевого трафика.</div>
+            <div class="tool-example">tcpdump -i eth0 -w capture.pcap</div>
+            <span class="tool-category">👂 Перехват трафика</span>
+        </div>
+
+        <!-- wireshark -->
+        <div class="tool-card">
+            <div class="tool-name">wireshark</div>
+            <div class="tool-description"><strong>Назначение:</strong> Network traffic analyzer with a GUI. <br> <strong>Использование:</strong> Детальный анализ и фильтрация пакетов в графическом интерфейсе.</div>
+            <div class="tool-example">wireshark</div>
+            <span class="tool-category">👂 Перехват трафика</span>
+        </div>
+
+        <!-- ssh -->
+        <div class="tool-card">
+            <div class="tool-name">openssh-client</div>
+            <div class="tool-description"><strong>Назначение:</strong> Secure Shell (SSH) client for remote administration. <br> <strong>Использование:</strong> Удаленное подключение к серверам, туннелирование.</div>
+            <div class="tool-example">ssh user@192.168.1.1</div>
+            <span class="tool-category">🔑 Удаленный доступ</span>
+        </div>
+
+        <!-- rdesktop -->
+        <div class="tool-card">
+            <div class="tool-name">rdesktop</div>
+            <div class="tool-description"><strong>Назначение:</strong> RDP client for Windows Remote Desktop Services. <br> <strong>Использование:</strong> Подключение к удаленному рабочему столу Windows.</div>
+            <div class="tool-example">rdesktop -u user 192.168.1.100</div>
+            <span class="tool-category">🔑 Удаленный доступ</span>
+        </div>
+
+        <!-- netcat -->
+        <div class="tool-card">
+            <div class="tool-name">netcat-traditional</div>
+            <div class="tool-description"><strong>Назначение:</strong> TCP/IP swiss army knife. <br> <strong>Использование:</strong> Создание сетевых соединений, передача файлов, reverse shells.</div>
+            <div class="tool-example">nc -lvnp 4444</div>
+            <span class="tool-category">🔧 Сетевые утилиты</span>
+        </div>
+
+        <!-- python3 -->
+        <div class="tool-card">
+            <div class="tool-name">python3</div>
+            <div class="tool-description"><strong>Назначение:</strong> Interactive high-level object-oriented programming language. <br> <strong>Использование:</strong> Разработка скриптов, эксплуатация, автоматизация.</div>
+            <div class="tool-example">python3 -c "print('Hello, World!')"</div>
+            <span class="tool-category">💻 Среда разработки</span>
+        </div>
+        </div>
+    </div>
+</body>
+</html>

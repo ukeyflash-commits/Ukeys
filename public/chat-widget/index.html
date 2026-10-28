@@ -1,0 +1,19 @@
+<html>
+<div id="chat-widget">
+    <div id="chat-output" style="min-height:100px; border:1px solid #ccc; padding:10px;"></div>
+    <input type="text" id="user-input" placeholder="Спросите консультанта..." />
+    <button onclick="handleSend()">Отправить</button>
+</div>
+
+<script>
+async function handleSend() {
+    const input = document.getElementById('user-input');
+    const msg = input.value.trim();
+    if (!msg) return;
+    input.value = '';
+    
+    await sendWithStreaming(msg);
+}
+</script>
+
+</html>

@@ -1,0 +1,30 @@
+{
+  "name": "ukey-shop",
+  "version": "1.0.1",
+  "description": "Ukey shop with telegramm",
+  "keywords": [],
+  "license": "ISC",
+  "author": "Ildar",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "check": "node --check server.js",
+    "deploy": "npm run check && pm2 restart my-app"
+  },
+  "dependencies": {
+    "@qwen-code/qwen-code": "^0.25.3",
+    "chatbotlite": "^0.7.26",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "nodemailer": "^9.0.3",
+    "openai": "^7.5.0",
+    "qwen-proxy": "^1.1.0"
+  },
+  "allowScripts": {
+    "better-sqlite3@12.11.1": true,
+    "koffi@2.16.3": true
+  }
+}

@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог всех программ Kali Linux</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            color: #212529;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #1a1a1a;
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .tool-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-left: 5px solid #007bff;
+            display: flex;
+            flex-direction: column;
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        .tool-name {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #007bff;
+            margin-top: 0;
+            margin-bottom: 8px;
+            word-break: break-word;
+        }
+        .tool-description {
+            font-size: 0.95em;
+            line-height: 1.6;
+            color: #495057;
+            flex-grow: 1;
+        }
+        .tool-description strong {
+            color: #212529;
+        }
+        .tool-example {
+            background-color: #e9ecef;
+            border-radius: 4px;
+            padding: 6px 10px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.8em;
+            color: #212529;
+            margin-top: 12px;
+            border: 1px solid #ced4da;
+            word-break: break-all;
+            white-space: pre-wrap;
+        }
+        .tool-category {
+            display: inline-block;
+            background-color: #e7f3ff;
+            color: #0056b3;
+            font-size: 0.7em;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 12px;
+            margin-top: 10px;
+            align-self: flex-start;
+        }
+        @media (max-width: 600px) {
+            .tool-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Полный каталог программ (Kali Linux)</h1>
+        <p style="text-align: center; color: #6c757d;">Все программы из списка с описанием и примерами использования.</p>
+        <div class="tool-grid">
+
+        <!-- Генерация карточек для всех программ из списка -->
+        <!-- 0trace -->
+        <div class="tool-card">
+            <div class="tool-name">0trace</div>
+            <div class="tool-description"><strong>Назначение:</strong> traceroute tool that uses existing TCP connections to map a network path. Позволяет выполнить трассировку маршрута, используя уже установленные TCP-соединения, что может помочь обойти некоторые фильтры.</div>
+            <div class="tool-example">0trace eth0 192.168.1.1 80</div>
+            <span class="tool-category">🔍 Сетевые утилиты</span>
+        </div>
+
+        <!-- 7zip -->
+        <div class="tool-card">
+            <div class="tool-name">7zip</div>
+            <div class="tool-description"><strong>Назначение:</strong> 7-Zip file archiver with a high compression ratio. Работа с архивами (7z, zip, tar, gz и др.).</div>
+            <div class="tool-example">7z x archive.7z -ooutput_dir</div>
+            <span class="tool-category">📁 Файловые утилиты</span>
+        </div>
+
+        <!-- aapt -->
+        <div class="tool-card">
+            <div class="tool-name">aapt</div>
+            <div class="tool-description"><strong>Назначение:</strong> Android Asset Packaging Tool. Используется для просмотра, создания и обновления APK-файлов.</div>
+            <div class="tool-example">aapt dump badging app.apk</div>
+            <span class="tool-category">📱 Android</span>
+        </div>
+
+        <!-- accountsservice -->
+        <div class="tool-card">
+            <div class="tool-name">accountsservice</div>
+            <div class="tool-description"><strong>Назначение:</strong> Служба для управления пользовательскими аккаунтами, предоставляющая D-Bus интерфейс для запроса и изменения информации о пользователях.</div>
+            <div class="tool-example">dbus-send --system --print-reply --dest=org.freedesktop.Accounts /org/freedesktop/Accounts org.freedesktop.Accounts.ListUsers</div>
+            <span class="tool-category">🔧 Системные утилиты</span>
+        </div>
+
+        <!-- acl -->
+        <div class="tool-card">
+            <div class="tool-name">acl</div>
+            <div class="tool-description"><strong>Назначение:</strong> Утилиты для управления списками контроля доступа (Access Control Lists) в файловых системах.</div>
+            <div class="tool-example">getfacl file.txt</div>
+            <span class="tool-category">🔧 Системные утилиты</span>
+        </div>
+
+        <!-- adduser -->
+        <div class="tool-card">
+            <div class="tool-name">adduser</div>
+            <div class="tool-description"><strong>Назначение:</strong> Утилита для добавления и удаления пользователей и групп в системе.</div>
+            <div class="tool-example">adduser newuser</div>
+            <span class="tool-category">🔧 Системные утилиты</span>
+        </div>
+
+        <!-- adw-gtk3-kali -->
+        <div class="tool-card">
+            <div class="tool-name">adw-gtk3-kali</div>
+            <div class="tool-description"><strong>Назначение:</strong> Kali тема для GTK3, основанная на Adwaita. Обеспечивает единый стиль для приложений GTK3.</div>
+            <div class="tool-example">(установка и применение через настройки внешнего вида)</div>
+            <span class="tool-category">🎨 Темы и оформление</span>
+        </div>
+
+        <!-- adwaita-icon-theme -->
+        <div class="tool-card">
+            <div class="tool-name">adwaita-icon-theme</div>
+            <div class="tool-description"><strong>Назначение:</strong> Стандартная тема значков по умолчанию для GNOME и GTK приложений.</div>
+            <div class="tool-example">(применяется автоматически в окружении GNOME)</div>
+            <span class="tool-category">🎨 Темы и оформление</span>
+        </div>
+
+        <!-- afflib-tools -->
+        <div class="tool-card">
+            <div class="tool-name">afflib-tools</div>
+            <div class="tool-description"><strong>Назначение:</strong> Инструменты для работы с форматом Advanced Forensics Format (AFF), используемым в цифровой криминалистике.</div>
+            <div class="tool-example">afconvert -a image.aff image.raw</div>
+            <span class="tool-category">🔬 Криминалистика</span>
+        </div>
+
+        <!-- aha -->
+        <div class="tool-card">
+            <div class="tool-name">aha</div>
+            <div class="tool-description"><strong>Назначение:</strong> ANSI color to HTML converter. Преобразует вывод терминала с цветами ANSI в HTML.</div>
+            <div class="tool-example">ls --color=always | aha > output.html</div>
+            <span class="tool-category">🔧 Сетевые утилиты</span>
+        </div>
+
+        <!-- aircrack-ng -->
+        <div class="tool-card">
+            <div class="tool-name">aircrack-ng</div>
+            <div class="tool-description"><strong>Назначение:</strong> Wireless WEP/WPA cracking. Комплект инструментов для аудита безопасности Wi-Fi сетей. Перехват пакетов, взлом WEP/WPA ключей.</div>
+            <div class="tool-example">aircrack-ng -w wordlist.txt -b 00:11:22:33:44:55 capture-01.cap</div>
+            <span class="tool-category">📶 Wi-Fi Аудит</span>
+        </div>
+
+        <!-- alsa-topology-conf -->
+        <div class="tool-card">
+            <div class="tool-name">alsa-topology-conf</div>
+            <div class="tool-description"><strong>Назначение:</strong> Конфигурационные файлы для ALSA (Advanced Linux Sound Architecture), описывающие топологию звуковых устройств.</div>
+            <div class="tool-example">(используется системой для настройки звука)</div>
+            <span class="tool-category">🎵 Аудио</span>
+        </div>
+
+        <!-- alsa-ucm-conf -->
+        <div class="tool-card">
+            <div class="tool-name">alsa-ucm-conf</div>
+            <div class="tool-description"><strong>Назначение:</strong> Конфигурационные файлы Use Case Manager для ALSA, определяющие, как настраивать звук для различных сценариев использования.</div>
+            <div class="tool-example">(используется системой для управления звуком)</div>
+            <span class="tool-category">🎵 Аудио</span>
+        </div>
+
+        <!-- amap -->
+        <div class="tool-card">
+            <div class="tool-name">amap</div>
+            <div class="tool-description"><strong>Назначение:</strong> Next-generation scanning tool for application protocol identification. Определяет работающие сервисы и их версии, даже если они используют нестандартные порты.</div>
+            <div class="tool-example">amap -bq 192.168.1.1 21-25</div>
+            <span class="tool-category">🔍 Сканирование</span>
+        </div>
+
+        <!-- amass -->
+        <div class="tool-card">
+            <div class="tool-name">amass</div>
+            <div class="tool-description"><strong>Назначение:</strong> In-depth DNS Enumeration and network mapping. Сбор информации о поддоменах и внешней поверхности атаки.</div>
+            <div class="tool-example">amass enum -d example.com</div>
+            <span class="tool-category">🌐 Разведка</span>
+        </div>
+
+        <!-- amass-common -->
+        <div class="tool-card">
+            <div class="tool-name">amass-common</div>
+            <div class="tool-description"><strong>Назначение:</strong> Общие файлы для amass, включая базы данных и конфигурации.</div>
+            <div class="tool-example">(часть пакета amass)</div>
+            <span class="tool-category">🌐 Разведка</span>
+        </div>
+
+        <!-- amd64-microcode -->
+        <div class="tool-card">
+            <div class="tool-name">amd64-microcode</div>
+            <div class="tool-description"><strong>Назначение:</strong> Микрокод для процессоров AMD64. Обновления микрокода для исправления уязвимостей и ошибок.</div>
+            <div class="tool-example">(загружается на этапе инициализации системы)</div>
+            <span class="tool-category">🔧 Системные утилиты</span>
+        </div>
+
+        <!-- android-framework-res -->
+        <div class="tool-card">
+            <div class="tool-name">android-framework-res</div>
+            <div class="tool-description"><strong>Назначение:</strong> Ресурсы Android Framework, используемые для сборки и работы с Android-приложениями.</div>
+            <div class="tool-example">(используется в процессе сборки Android)</div>
+            <span class="tool-category">📱 Android</span>
+        </div>
+
+        <!-- android-libaapt -->
+        <div class="tool-card">
+            <div class="tool-name">android-libaapt</div>
+            <div class="tool-description"><strong>Назначение:</strong> Библиотека для работы с ресурсами Android, часть AAPT.</div>
+            <div class="tool-example">(используется aapt)</div>
+            <span class="tool-category">📱 Android</span>
+        </div>
+
+        <!-- android-libandroidfw -->
+        <div class="tool-card">
+            <div class="tool-name">android-libandroidfw</div>
+            <div class="tool-description"><strong>Назначение:</strong> Библиотека для работы с файловой системой Android, включая ресурсы и манифесты.</div>
+            <div class="tool-example">(используется для парсинга APK)</div>
+            <span class="tool-category">📱 Android</span>
+        </div>
+
+        <!-- android-libbacktrace -->
+        <div class="tool-card">
+            <div class="tool-name">android-libbacktrace</div>
+            <div class="tool-description"><strong>Назначение:</strong> Библиотека для получения трассировки стека в Android, помогает при отладке.</div>
+            <div class="tool-example">(используется разработчиками и отладчиками)</div>
+            <span class="tool-category">📱 Android</span>
+        </div>
+
+        <!-- android-libbase -->
+        <div class="tool-card">
+            <div class="tool-name">android-libbase</div>
+            <div class="tool-description"><strong>Назначение:</strong> Базовая библиотека Android, содержащая общие утилиты для логирования, строк и файлов.</div>
+            <div class="tool-example">(используется в различных Android-инструментах)</div>
+            <span class="tool-category">📱 Android</span>
+        </div>
+
+        <!-- android-libcutils -->
+        <div class="tool-card">
+            <div class="tool-name">android-libcutils</div>
+            <div class="tool-description"><strong>Назначение:</strong> Библиотека утилит Android, предоставляющая функции для работы со строками, памятью и свойствами системы.</div>
+            <div class="tool-example">(используется в Android-инструментарии)</div>
+            <span class="tool-category">📱 Android</span>
+        </div>
+
+        <!-- android-liblog -->
+        <div class="tool-card">
+            <div class="tool-name">android-liblog</div>
+            <div class="tool-description"><strong>Назначение:</strong> Библиотека для логирования в Android NDK, позволяет отправлять сообщения в системный лог.</div>
+            <div class="tool-example">(используется в нативных приложениях)</div>
+            <span class="tool-category">📱 Android</span>
+        </div>
+
+        <!-- android-libutils -->
+        <div class="tool-card">
+            <div class="tool-name">android-libutils</div>
+            <div class="tool-description"><strong>Назначение:</strong> Набор утилитных функций Android, включая работу с векторами, хешами и т.д.</div>
+            <div class="tool-example">(используется в Android-инструментарии)</div>
+            <span class="tool-category">📱 Android</span>
+        </div>
+
+        <!-- android-libziparchive -->
+        <div class="tool-card">
+            <div class="tool-name">android-libziparchive</div>
+            <div class="tool-description"><strong>Назначение:</strong> Библиотека для работы с ZIP-архивами, используемая для обработки APK-файлов.</div>
+            <div class="tool-example">(используется для распаковки и анализа APK)</div>
+            <span class="tool-category">📱 Android</span>
+        </div>
+
+        <!-- apache-users -->
+        <div class="tool-card">
+            <div class="tool-name">apache-users</div>
+            <div class="tool-description"><strong>Назначение:</strong> Инструмент для перебора пользователей на веб-серверах Apache.</div>
+            <div class="tool-example">apache-users -h example.com</div>
+            <span class="tool-category">🌐 Веб-безопасность</span>
+        </div>
+
+        <!-- apache2 -->
+        <div class="tool-card">
+            <div class="tool-name">apache2</div>
+            <div class="tool-description"><strong>Назначение:</strong> Apache HTTP Server — один из самых популярных веб-серверов.</div>
+            <div class="tool-example">sudo systemctl start apache2</div>
+            <span class="tool-category">🌐 Веб-сервер</span>
+        </div>
+
+        <!-- apache2-bin -->
+        <div class="tool-card">
+            <div class="tool-name">apache2-bin</div>
+            <div class="tool-description"><strong>Назначение:</strong> Исполняемые файлы Apache HTTP Server.</div>
+            <div class="tool-example">(часть пакета apache2)</div>
+            <span class="tool-category">🌐 Веб-сервер</span>
+        </div>
+
+        <!-- apache2-data -->
+        <div class="tool-card">
+            <div class="tool-name">apache2-data</div>
+            <div class="tool-description"><strong>Назначение:</strong> Данные (иконки, страницы ошибок) для Apache HTTP Server.</div>
+            <div class="tool-example">(часть пакета apache2)</div>
+            <span class="tool-category">🌐 Веб-сервер</span>
+        </div>
+
+        <!-- apache2-utils -->
+        <div class="tool-card">
+            <div class="tool-name">apache2-utils</div>
+            <div class="tool-description"><strong>Назначение:</strong> Утилиты для Apache HTTP Server, такие как htpasswd для управления паролями.</div>
+            <div class="tool-example">htpasswd -c .htpasswd user</div>
+            <span class="tool-category">🌐 Веб-сервер</span>
+        </div>
+
+        <!-- apg -->
+        <div class="tool-card">
+            <div class="tool-name">apg</div>
+            <div class="tool-description"><strong>Назначение:</strong> Automated Password Generator — генератор паролей, создающий легко запоминающиеся, но сложные пароли.</div>
+            <div class="tool-example">apg -a 1 -n 5 -m 12</div>
+            <span class="tool-category">🔐 Безопасность</span>
+        </div>
+
+        <!-- apktool -->
+        <div class="tool-card">
+            <div class="tool-name">apktool</div>
+            <div class="tool-description"><strong>Назначение:</strong> Tool for reverse engineering Android APK files. Декодирование ресурсов и манифеста, пересборка APK.</div>
+            <div class="tool-example">apktool d app.apk</div>
+            <span class="tool-category">📱 Реверс-инжиниринг</span>
+        </div>
+
+        <!-- apparmor -->
+        <div class="tool-card">
+            <div class="tool-name">apparmor</div>
+            <div class="tool-description"><strong>Назначение:</strong> Утилита для работы с AppArmor — системой мандатного контроля доступа в Linux.</div>
+            <div class="tool-example">apparmor_status</div>
+            <span class="tool-category">🔧 Системные утилиты</span>
+        </div>
+
+        <!-- appstream -->
+        <div class="tool-card">
+            <div class="tool-name">appstream</div>
+            <div class="tool-description"><strong>Назначение:</strong> Инструмент для работы с метаданными программных компонентов, используемый в центрах приложений.</div>
+            <div class="tool-example">appstreamcli search text</div>
+            <span class="tool-category">🔧 Системные утилиты</span>
+        </div>
+
+        <!-- apt -->
+        <div class="tool-card">
+            <div class="tool-name">apt</div>
+            <div class="tool-description"><strong>Назначение:</strong> Утилита командной строки для управления пакетами (установка, удаление, обновление).</div>
+            <div class="tool-example">sudo apt install package</div>
+            <span class="tool-category">🔧 Системные утилиты</span>
+        </div>
+
+        <!-- apt-config-icons -->
+        <div class="tool-card">
+            <div class="tool-name">apt-config-icons</div>
+            <div class="tool-description"><strong>Назначение:</strong> Конфигурация для APT, определяющая, какие значки должны быть установлены для пакетов.</div>
+            <div class="tool-example">(часть системы управления пакетами)</div>
+            <span class="tool-category">🔧 Системные утилиты</span>
+        </div>
+
+        <!-- apt-config-icons-hidpi -->
+        <div class="tool-card">
+            <div class="tool-name">apt-config-icons-hidpi</div>
+            <div class="tool-description"><strong>Назначение:</strong> Версия APT конфигурации для значков с высоким разрешением (HiDPI).</div>
+            <div class="tool-example">(часть системы управления пакетами)</div>
+            <span class="tool-category">🔧 Системные утилиты</span>
+        </div>
+
+        <!-- apt-config-icons-large -->
+        <div class="tool-card">
+            <div class="tool-name">apt-config-icons-large</div>
+            <div class="tool-description"><strong>Назначение:</strong> Версия APT конфигурации для больших значков.</div>
+            <div class="tool-example">(часть системы управления пакетами)</div>
+            <span class="tool-category">🔧 Системные утилиты</span>
+        </div>
+
+        <!-- apt-config-icons-large-hidpi -->
+        <div class="tool-card">
+            <div class="tool-name">apt-config-icons-large-hidpi</div>
+            <div class="tool-description"><strong>Назначение:</strong> Версия APT конфигурации для больших значков высокого разрешения.</div>
+            <div class="tool-example">(часть системы управления пакетами)</div>
+            <span class="tool-category">🔧 Системные утилиты</span>
+        </div>
+
+        <!-- apt-file -->
+        <div class="tool-card">
+            <div class="tool-name">apt-file</div>
+            <div class="tool-description"><strong>Назначение:</strong> Инструмент для поиска файлов в пакетах Debian/Ubuntu без их установки.</div>
+            <div class="tool-example">apt-file search filename</div>
+            <span class="tool-category">🔧 Системные утилиты</span>
+        </div>
+
+        <!-- apt-listchanges -->
+        <div class="tool-card">
+            <div class="tool-name">apt-listchanges</div>
+            <div class="tool-description"><strong>Назначение:</strong> Показывает историю изменений (changelog) для пакетов перед их установкой или обновлением.</div>
+            <div class="tool-example">(вызывается автоматически при apt upgrade)</div>
+            <span class="tool-category">🔧 Системные утилиты</span>
+        </div>
+
+        <!-- apt-utils -->
+        <div class="tool-card">
+            <div class="tool-name">apt-utils</div>
+            <div class="tool-description"><strong>Назначение:</strong> Дополнительные утилиты для работы с APT, такие как apt-ftparchive и apt-extracttemplates.</div>
+            <div class="tool-example">apt-ftparchive packages . > Packages</div>
+            <span class="tool-category">🔧 Системные утилиты</span>
+        </div>
+
+        <!-- arj -->
+        <div class="tool-card">
+            <div class="tool-name">arj</div>
+            <div class="tool-description"><strong>Назначение:</strong> Архиватор для формата .arj, популярного в старых DOS-системах.</div>
+            <div class="tool-example">arj x archive.arj</div>
+            <span class="tool-category">📁 Файловые утилиты</span>
+        </div>
+
+        <!-- ark -->
+        <div class="tool-card">
+            <div class="tool-name">ark</div>
+            <div class="tool-description"><strong>Назначение:</strong> Графический архиватор для KDE, поддерживающий множество форматов.</div>
+            <div class="tool-example">ark</div>
+            <span class="tool-category">📁 Файловые утилиты</span>
+        </div>
+
+        <!-- armitage -->
+        <div class="tool-card">
+            <div class="tool-name">armitage</div>
+            <div class="tool-description"><strong>Назначение:</strong> Cyber attack management tool for Metasploit. Графический интерфейс для управления атаками, визуализация целей и автоматизация.</div>
+            <div class="tool-example">armitage</div>
+            <span class="tool-category">💻 Эксплуатация</span>
+        </div>
+
+        <!-- arp-scan -->
+        <div class="tool-card">
+            <div class="tool-name">arp-scan</div>
+            <div class="tool-description"><strong>Назначение:</strong> ARP scanning and fingerprinting tool. Обнаружение устройств в локальной сети с помощью ARP-запросов.</div>
+            <div class="tool-example">arp-scan --local</div>
+            <span class="tool-category">🔍 Сканирование</span>
+        </div>
+
+        <!-- arping -->
+        <div class="tool-card">
+            <div class="tool-name">arping</div>
+            <div class="tool-description"><strong>Назначение:</strong> Утилита для отправки ARP запросов для проверки доступности хостов в локальной сети.</div>
+            <div class="tool-example">arping 192.168.1.1</div>
+            <span class="tool-category">🔍 Сканирование</span>
+        </div>
+
+        <!-- arpwatch -->
+        <div class="tool-card">
+            <div class="tool-name">arpwatch</div>
+            <div class="tool-description"><strong>Назначение:</strong> Инструмент для мониторинга ARP-активности в сети и обнаружения подозрительных изменений (например, ARP-spoofing).</div>
+            <div class="tool-example">arpwatch -i eth0</div>
+            <span class="tool-category">👂 Перехват трафика</span>
+        </div>
+
+        <!-- asleap -->
+        <div class="tool-card">
+            <div class="tool-name">asleap</div>
+            <div class="tool-description"><strong>Назначение:</strong> Инструмент для взлома паролей, использующих протокол LEAP (Lightweight Extensible Authentication Protocol) в сетях Cisco.</div>
+            <div class="tool-example">asleap -f file -w wordlist.txt -r capture.dump</div>
+            <span class="tool-category">🔐 Взлом паролей</span>
+        </div>
+
+        <!-- aspell -->
+        <div class="tool-card">
+            <div class="tool-name">aspell</div>
+            <div class="tool-description"><strong>Назначение:</strong> GNU Aspell — проверка орфографии в тексте.</div>
+            <div class="tool-example">aspell -c document.txt</div>
+            <span class="tool-category">📝 Текстовые утилиты</span>
+        </div>
+
+        <!-- aspell-en -->
+        <div class="tool-card">
+            <div class="tool-name">aspell-en</div>
+            <div class="tool-description"><strong>Назначение:</strong> Английский словарь для aspell.</div>
+            <div class="tool-example">(используется с aspell)</div>
+            <span class="tool-category">📝 Текстовые утилиты</span>
+        </div>
+
+        <!-- aspnetcore-runtime-6.0 -->
+        <div class="tool-card">
+            <div class="tool-name">aspnetcore-runtime-6.0</div>
+            <div class="tool-description"><strong>Назначение:</strong> Среда выполнения для ASP.NET Core 6.0 для запуска веб-приложений на .NET Core.</div>
+            <div class="tool-example">(используется для запуска .NET веб-приложений)</div>
+            <span class="tool-category">💻 Среда разработки</span>
+        </div>
+
+        <!-- aspnetcore-targeting-pack-6.0 -->
+        <div class="tool-card">
+            <div class="tool-name">aspnetcore-targeting-pack-6.0</div>
+            <div class="tool-description"><strong>Назначение:</strong> Пакет для разработки под ASP.NET Core 6.0, содержащий ссылочные сборки.</div>
+            <div class="tool-example">(используется при разработке)</div>
+            <span class="tool-category">💻 Среда разработки</span>
+        </div>
+
+        <!-- at-spi2-common -->
+        <div class="tool-card">
+            <div class="tool-name">at-spi2-common</div>
+            <div class="tool-description"><strong>Назначение:</strong> Общие файлы для AT-SPI 2 (Assistive Technology Service Provider Interface) для обеспечения доступности.</div>
+            <div class="tool-example">(часть системы доступности)</div>
+            <span class="tool-category">♿ Доступность</span>
+        </div>
+
+        <!-- at-spi2-core -->
+        <div class="tool-card">
+            <div class="tool-name">at-spi2-core</div>
+            <div class="tool-description"><strong>Назначение:</strong> Ядро AT-SPI 2 — реализация D-Bus интерфейса для средств обеспечения доступности.</div>
+            <div class="tool-example">(часть системы доступности)</div>
+            <span class="tool-category">♿ Доступность</span>
+        </div>
+
+        <!-- atftpd -->
+        <div class="tool-card">
+            <div class="tool-name">atftpd</div>
+            <div class="tool-description"><strong>Назначение:</strong> Advanced TFTP server — улучшенный TFTP сервер для передачи файлов.</div>
+            <div class="tool-example">sudo atftpd --daemon /tftpboot</div>
+            <span class="tool-category">🔧 Сетевые утилиты</span>
+        </div>
+
+        <!-- atril -->
+        <div class="tool-card">
+            <div class="tool-name">atril</div>
+            <div class="tool-description"><strong>Назначение:</strong> MATE document viewer. Просмотр документов в форматах PDF, PostScript, DVI и других.</div>
+            <div class="tool-example">atril document.pdf</div>
+            <span class="tool-category">📄 Офисные приложения</span>
+        </div>
+
+        <!-- atril-common -->
+        <div class="tool-card">
+            <div class="tool-name">atril-common</div>
+            <div class="tool-description"><strong>Назначение:</strong> Общие файлы для Atril.</div>
+            <div class="tool-example">(часть пакета atril)</div>
+            <span class="tool-category">📄 Офисные приложения</span>
+        </div>
+
+        <!-- attr -->
+        <div class="tool-card">
+            <div class="tool-name">attr</div>
+            <div class="tool-description"><strong>Назначение:</strong> Утилиты для работы с расширенными атрибутами файлов в Linux.</div>
+            <div class="tool-example">setfattr -n user.comment -v "my comment" file.txt</div>
+            <span class="tool-category">🔧 Системные утилиты</span>
+        </div>
+
+        <!-- autopsy -->
+        <div class="tool-card">
+            <div class="tool-name">autopsy</div>
+            <div class="tool-description"><strong>Назначение:</strong> Графический интерфейс для Sleuth Kit, используется для цифровой криминалистики и анализа файловых систем.</div>
+            <div class="tool-example">autopsy</div>
+            <span class="tool-category">🔬 Криминалистика</span>
+        </div>
+
+        <!-- avahi-daemon -->
+        <div class="tool-card">
+            <div class="tool-name">avahi-daemon</div>
+            <div class="tool-description"><strong>Назначение:</strong> Демон для Zeroconf (Bonjour/Avahi), позволяющий обнаруживать сервисы и хосты в локальной сети.</div>
+            <div class="tool-example">sudo systemctl start avahi-daemon</div>
+            <span class="tool-category">🔧 Сетевые утилиты</span>
+        </div>
+
+        <!-- avahi-utils -->
+        <div class="tool-card">
+            <div class="tool-name">avahi-utils</div>
+            <div class="tool-description"><strong>Назначение:</strong> Утилиты для работы с Avahi: просмотр сервисов, публикация, разрешение имен.</div>
+            <div class="tool-example">avahi-browse -a

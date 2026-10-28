@@ -1,0 +1,13 @@
+node_modules/
+.env
+.proxy-enabled
+*.db
+*.db-shm
+*.db-wal
+*.swp
+*.kate-swap
+gangster@*
+
+*.bak*
+*.save*
+server_do_QR_versia2.js
