@@ -482,8 +482,8 @@ async function sendOrderEmails(orderData) {
 app.get('/api/info', (req, res) => {
     res.json({
         products: [
-            { name: 'Ukey Windows PE',     price: 1500, file: 'ukey_winpe.iso', video:'../img/key1.mp4'   },
-            { name: 'Ukey Kali Linux',     price: 2000, file: 'ukey_kali.iso', video:'../img/kali.mp4'    },
+            { name: 'Ukey Windows PE',     price: 500, file: 'ukey_winpe.iso', video:'../img/key1.mp4'   },
+            { name: 'Ukey Kali Linux',     price: 1000, file: 'ukey_kali.iso', video:'../img/kali.mp4'    },
             { name: 'Ukey Windows PE Pro', price: 2500, file: 'ukey_winpe_pro.iso',video:'../img/nindza.mp4' },
         ],
     });
