@@ -717,6 +717,50 @@
             to   { transform: translateX(0); opacity: 1; }
         }
 
+                /* ===== ФУТЕР =====илдар */
+.site-footer {
+    margin-top: 60px;
+    padding: 30px 20px 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.site-footer__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.site-footer__line {
+    color: rgba(255, 255, 255, 0.45);   /* серый */
+    font-size: 0.72rem;
+    line-height: 1.6;
+    margin-bottom: 8px;
+    letter-spacing: 0.2px;
+}
+
+.site-footer__line a {
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.2s ease;
+}
+
+.site-footer__line a:hover {
+    color: var(--accent);
+}
+
+.site-footer__thanks {
+    margin-top: 16px;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+
         /* ===== АДАПТАЦИЯ ===== */
         @media (max-width: 768px) {
             .nav-container {
@@ -768,6 +812,7 @@
                 flex-direction: column;
             }
         }
+
     </style>
 </head>
 <body>
@@ -835,7 +880,7 @@
         {
             id: 1,
             name: "UKey быстрый старт",
-            price: 1500,
+            price: 500,
             category: "usb",
             emoji: "💻",
             video: "../img/key1.mp4",//ВИДЕО ДЛЯ ТОВАРА
@@ -886,7 +931,7 @@
         {
             id: 2,
             name: "UKey Kalinux",
-            price: 2000,
+            price: 1000,
             category: "usb",
             emoji: "🐧",
             video: "../img/kali.mp4",
@@ -1264,10 +1309,36 @@ function addToCart(productId) {
     displayProducts();
     loadCart();
 
-    console.log("🚀 Магазин загружен!");
-    console.log("📊 Доступно товаров:", products.length);
+    console.log("🚀 Эмиль Магазин загружен!");
+    console.log("📊Доступно товаров:", products.length);
     console.log("📌 На главной отображается только 3 товара");
 </script>
+
+<!-- ===== ФУТЕР / ПРАВОВАЯ ИНФОРМАЦИЯ ===== -->
+<footer class="site-footer">
+    <div class="site-footer__inner">
+        <p class="site-footer__line">
+            © 2026 UKeys. Все права принадлежат G.Emil и  защищены. Информация на сайте не является публичной офертой.Круглосуточно.
+        </p>
+        <p class="site-footer__line">
+            Используя сайт, вы соглашаетесь с обработкой персональных данных в соответствии
+            с ФЗ-152 «О персональных данных» и <a href="/privacy.html">политикой конфиденциальности</a>.
+        </p>
+        <p class="site-footer__line">
+            Товар предназначен для обучения специалистов по направлению DevOps и личного использования. Ответственность
+            за применение инструментов лежит на пользователе.
+        </p>
+        <p class="site-footer__thanks">
+           💛 Универсальные Ключи UKeys 💛
+        </p>
+    </div>
+</footer>
+
+
+
+
+
+
 
   <!-- Виджет чата -->
   <script src="https://unpkg.com/chatbotlite@0.7.26/dist/embed.global.js"></script>
