@@ -21,7 +21,8 @@
     "express": "^5.2.1",
     "nodemailer": "^9.0.3",
     "openai": "^7.5.0",
-    "qwen-proxy": "^1.1.0"
+    "qwen-proxy": "^1.1.0",
+    "resend": "^6.37.0"
   },
   "allowScripts": {
     "better-sqlite3@12.11.1": true,

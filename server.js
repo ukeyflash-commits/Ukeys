@@ -41,7 +41,8 @@ const fs         = require('fs');
 const crypto     = require('crypto');
 const Database   = require('better-sqlite3');
 const OpenAI     = require('openai');
-
+//НОВЫЙ МОДУЛЬ ДЛЯ отправки ПИСЕМ
+const { sendEmail } = require('./mailer-resend');
 
 //ДОБАВЛЕНИЕ ЗАЩИТЫ АДМИН ПАНЕЛИ admin.html
 //
@@ -222,7 +223,7 @@ Email: ukeyflash@gmail.com
 const EMAIL_CONFIG = {
     user:        'ukeyflash@gmail.com',
     password:    process.env.EMAIL_PASSWORD,
-    notifyEmail: 'gafarOf@yandex.ru',
+    notifyEmail: process.env.NOTIFY_EMAIL || 'gafarOf@yandex.ru',
 };
 
 const transporter = nodemailer.createTransport({
@@ -284,7 +285,13 @@ async function sendFileToClient(order) {
 // ------------------------------------------------------------
 // 8.2. ПРОВЕРКА БАЗЫ (ТАЙМЕР): оплачен → отправлен
 // ------------------------------------------------------------
+let __checkingPaidOrders = false;
 async function checkPaidOrders() {
+    if (__checkingPaidOrders) {
+        console.log('⏭️  checkPaidOrders уже выполняется — пропуск тика');
+        return;
+    }
+    __checkingPaidOrders = true;
     try {
         // 1. Ищем заказы: статус='оплачен', ещё не отправлен
         const orders = db.prepare(`
@@ -303,6 +310,10 @@ async function checkPaidOrders() {
 
             // 3. Проверяем срок давности ссылки
             const linkDate = new Date(order.file_created_at);
+            if (!linkDate || isNaN(linkDate.getTime())) {
+                console.log(`❌ Заказ №${order.inv_id}: некорректный file_created_at`);
+                continue;
+            }
             const now      = new Date();
             const diffDays = (now - linkDate) / (1000 * 60 * 60 * 24);
 
@@ -311,10 +322,29 @@ async function checkPaidOrders() {
                 continue;
             }
 
-            // 4. Отправляем письмо
-            await sendFileToClient(order);
+            // 4. Атомарно захватываем заказ, чтобы не отправить дважды
+            const claim = db.prepare(`
+                UPDATE pending_orders
+                SET status = 'отправляется'
+                WHERE inv_id = ? AND status = 'оплачен' AND sent_to_client = 0
+            `).run(order.inv_id);
+            if (claim.changes !== 1) {
+                console.log(`⏭️  Заказ #${order.inv_id} уже кем-то захвачен — пропуск`);
+                continue;
+            }
 
-            // 5. Помечаем как отправленный
+            // 5. Отправляем письмо
+            try {
+                await sendFileToClient(order);
+            } catch (e) {
+                // откатываем статус, чтобы попробовать снова на следующем тике
+                db.prepare(`
+                    UPDATE pending_orders SET status = 'оплачен' WHERE inv_id = ?
+                `).run(order.inv_id);
+                throw e;
+            }
+
+            // 6. Помечаем как отправленный
             db.prepare(`
                 UPDATE pending_orders
                 SET status = 'отправлен', sent_to_client = 1
@@ -332,6 +362,8 @@ async function checkPaidOrders() {
         }
     } catch (err) {
         console.error('Ошибка при проверке оплаченных заказов:', err.message);
+    } finally {
+        __checkingPaidOrders = false;
     }
 }
 
@@ -553,7 +585,7 @@ app.post('/api/order', async (req, res) => {
 });
 
 // 11.2.1 Прикрепить DropMeFiles-ссылку к заказу (админ)
-app.post('/api/admin/attach-link', checkAuth,(req, res) => {
+app.post('/api/admin/attach-link', (req, res) => {
     try {
         const invId   = Number(req.body.invId);
         const fileUrl = String(req.body.fileUrl || '').trim();
@@ -566,14 +598,19 @@ app.post('/api/admin/attach-link', checkAuth,(req, res) => {
         const order = db.prepare('SELECT * FROM pending_orders WHERE inv_id = ?').get(invId);
         if (!order) return res.status(404).json({ error: 'Заказ не найден' });
 
-//Защита от повторного использования ссылки проверяет базу
-      const existingLink = db.prepare('SELECT * FROM pending_orders WHERE inv_id = ?').get(fileUrl);
-if (existingLink){
-          return res.status(400).json({
-               error: `Эта ссылка уже прикреплена к заказу #${existingLink.inv_id}. Выберите другую!`
-});
+        if (order.sent_to_client === 1) {
+            return res.status(400).json({
+                error: 'Письмо клиенту уже отправлено. Сначала сбросьте sent_to_client вручную.'
+            });
+        }
 
-}
+//Защита от повторного использования ссылки проверяет базу
+      const existingLink = db.prepare('SELECT * FROM file_links WHERE url = ?').get(fileUrl);
+      if (existingLink) {
+          return res.status(400).json({
+              error: `Эта ссылка уже прикреплена к заказу #${existingLink.inv_id}. Выберите другую!`
+          });
+      }
 
       //Записывваем ссылку в новую таблицу file_links
 db.prepare('INSERT INTO file_links (inv_id, url) VALUES (?, ?)').run(invId, fileUrl);
@@ -596,7 +633,7 @@ db.prepare('INSERT INTO file_links (inv_id, url) VALUES (?, ?)').run(invId, file
 });
 
 // 11.2.2 Список заказов для админки
-app.get('/api/admin/orders',checkAuth , (req, res) => {
+app.get('/api/admin/orders', (req, res) => {
     try {
         const status = req.query.status;
 
@@ -698,7 +735,7 @@ app.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 [v2.1.0] Сервер запущен на http://localhost:${PORT}`);
     console.log(`📧 [v2.1.0] Уведомления на ${EMAIL_CONFIG.notifyEmail}`);
     console.log(`🤖 [v2.1.0] ИИ подключён к: ${process.env.AI_BASE_URL || 'OpenAI'}`);
-    console.log(`🖥️  [v2.1.0] Админка: http://localhost:${PORT}/admin.html`);
+    console.log(`🖥️  [v2.1.0] Админка: http://localhost:${PORT}/admin`);
     testEmail().catch(err => console.error('❌ [v2.1.0] testEmail:', err.message));
     setInterval(checkPaidOrders, 60 * 1000);
 });
