@@ -42,7 +42,6 @@ const crypto     = require('crypto');
 const Database   = require('better-sqlite3');
 const OpenAI     = require('openai');
 //НОВЫЙ МОДУЛЬ ДЛЯ отправки ПИСЕМ
-const { sendEmail } = require('./mailer-resend');
 
 //ДОБАВЛЕНИЕ ЗАЩИТЫ АДМИН ПАНЕЛИ admin.html
 //
@@ -221,16 +220,18 @@ Email: ukeyflash@gmail.com
 // 8. ПОЧТА
 // ------------------------------------------------------------
 const EMAIL_CONFIG = {
-    user:        'ukeyflash@gmail.com',
+    user: 'info@ukeyflash.ru',
     password:    process.env.EMAIL_PASSWORD,
-    notifyEmail: process.env.NOTIFY_EMAIL || 'gafarOf@yandex.ru',
+    notifyEmail: process.env.NOTIFY_EMAIL || 'ukeyflash@gmail.com',
 };
 
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: process.env.EMAIL_HOST,
+    port: process.env.EMAIL_PORT,
+   secure: true,
     auth: {
-        user: EMAIL_CONFIG.user,
-        pass: EMAIL_CONFIG.password,
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD,
     },
 });
 
