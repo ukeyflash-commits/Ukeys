@@ -42,7 +42,6 @@ const crypto     = require('crypto');
 const Database   = require('better-sqlite3');
 const OpenAI     = require('openai');
 //НОВЫЙ МОДУЛЬ ДЛЯ отправки ПИСЕМ
-
 //ДОБАВЛЕНИЕ ЗАЩИТЫ АДМИН ПАНЕЛИ admin.html
 //
 
@@ -77,7 +76,7 @@ app.use(express.static('public'));
 const DOWNLOAD_LINK_TTL_DAYS = 7; // единый срок: токен = письмо = проверка в checkPaidOrders
 // ── Basic Auth для админки ────────────────────────────────
 // ── Basic Auth для админки ────────────────добавил  ночью────────────────
-const ADMIN_USER = process.env.ADMIN_USER || 'admin';
+const ADMIN_USER = process.env.ADMIN_USER || 'gangster';
 
 let ADMIN_PASS = process.env.ADMIN_PASS;
 if (!ADMIN_PASS) {
@@ -203,15 +202,15 @@ const SYSTEM_PROMPT = `Вы — вежливый и опытный консул�
 Мы продаём готовые решения для восстановления систем и спасения данных.
 
 ## Товары
-- Ukey Windows PE — 1500 ₽ (восстановление Windows, сброс паролей, тесты памяти)
-- Ukey Kali Linux — 2500 ₽ (пентест, восстановление данных, проверка безопасности сети)
-- Ukey Windows PE Pro — 2000 ₽ (расширенный набор: глубокое восстановление файлов, антивирусные сканеры, UEFI)
+- Ukey  PE — 1500 ₽ (восстановление Windows, сброс паролей, тесты памяти)
+- Ukey Kali Linux — 1000 ₽ (пентест, восстановление данных, проверка безопасности сети)
+- Ukey  PE Pro — 2500 ₽ (расширенный набор: глубокое восстановление файлов, антивирусные сканеры, UEFI)
 
 ## Контакты
 Email: ukeyflash@gmail.com
 
 # Правила ответа
-1. Потеря данных — предложи Windows PE или Pro.
+1. Потеря данных — предложи Ukey PE или Proy.
 2. Проверка безопасности сети — предложи Kali Linux.
 3. Уточняй ОС клиента (Windows/Mac) и суть проблемы.
 4. Не выдумывай функции, которых нет в описании товаров.`;
@@ -220,7 +219,11 @@ Email: ukeyflash@gmail.com
 // 8. ПОЧТА
 // ------------------------------------------------------------
 const EMAIL_CONFIG = {
+<<<<<<< HEAD
     user: 'info@ukeyflash.ru',
+=======
+    user:        'info@ukeyflash.ru',
+>>>>>>> 3f88213 (bi_smi_LLyahi: поправил все работает)
     password:    process.env.EMAIL_PASSWORD,
     notifyEmail: process.env.NOTIFY_EMAIL || 'ukeyflash@gmail.com',
 };
@@ -228,7 +231,11 @@ const EMAIL_CONFIG = {
 const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
+<<<<<<< HEAD
    secure: true,
+=======
+    secure: true,
+>>>>>>> 3f88213 (bi_smi_LLyahi: поправил все работает)
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASSWORD,
@@ -515,7 +522,7 @@ async function sendOrderEmails(orderData) {
 app.get('/api/info', (req, res) => {
     res.json({
         products: [
-            { name: 'Ukey Windows PE',     price: 500, file: 'ukey_winpe.iso', video:'../img/key1.mp4'   },
+            { name: 'Ukey Windows PE',     price: 1500, file: 'ukey_winpe.iso', video:'../img/key1.mp4'   },
             { name: 'Ukey Kali Linux',     price: 1000, file: 'ukey_kali.iso', video:'../img/kali.mp4'    },
             { name: 'Ukey Windows PE Pro', price: 2500, file: 'ukey_winpe_pro.iso',video:'../img/nindza.mp4' },
         ],
@@ -577,8 +584,13 @@ app.post('/api/order', async (req, res) => {
         // После /api/admin/attach-link получит status='оплачен'
         // и checkPaidOrders() отправит клиенту ссылку.
 
-        const paymentUrl = `/?paid=1&invId=${invId}`;
-        res.json({ success: true, paymentUrl, invId });
+   const payPageUrl = `/pay.html?invId=${invId}`;
+   res.json({
+       sucess: true,
+       invId:invId,
+       payPageUrl: payPageUrl
+});
+
     } catch (error) {
         console.error('❌ [v2.1.0] Ошибка создания заказа:', error);
         res.status(500).json({ success: false, message: 'Ошибка сервера' });

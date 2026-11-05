@@ -1,10 +1,16 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <!-- Адаптивность для мобильных устройств -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Оформление заказа | UKeys</title>
+
     <style>
+        /* ============================================================
+           СБРОС СТИЛЕЙ И БАЗОВЫЕ НАСТРОЙКИ
+           ============================================================ */
         * {
             margin: 0;
             padding: 0;
@@ -13,11 +19,13 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Градиентный фон страницы */
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
         }
 
+        /* Основной белый контейнер по центру экрана */
         .container {
             max-width: 800px;
             margin: 0 auto;
@@ -37,11 +45,14 @@
             color: #444;
             margin: 25px 0 15px 0;
             font-size: 22px;
+            /* Фиолетовая линия под заголовком */
             border-bottom: 2px solid #667eea;
             padding-bottom: 8px;
         }
 
-        /* Товары */
+        /* ============================================================
+           БЛОК ТОВАРОВ (список доступных товаров)
+           ============================================================ */
         .product-item {
             border: 1px solid #e0e0e0;
             padding: 15px;
@@ -56,6 +67,7 @@
             background: #f8f9fa;
         }
 
+        /* Подсветка товара при наведении */
         .product-item:hover {
             border-color: #667eea;
             background: #f0f2ff;
@@ -78,6 +90,7 @@
             font-weight: bold;
         }
 
+        /* Кнопка «Добавить» у каждого товара */
         .product-item button {
             background: #667eea;
             color: white;
@@ -90,13 +103,23 @@
             white-space: nowrap;
         }
 
-        .product-item button:hover {
+        /* Эффект наведения только если кнопка активна */
+        .product-item button:hover:not(:disabled) {
             background: #5a67d8;
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
         }
 
-        /* Корзина */
+        /* Кнопка в состоянии «уже в корзине» */
+        .product-item button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ============================================================
+           БЛОК КОРЗИНЫ (добавленные товары)
+           ============================================================ */
         .cart-item {
             display: flex;
             justify-content: space-between;
@@ -107,6 +130,7 @@
             gap: 10px;
         }
 
+        /* Убираем линию у последнего элемента корзины */
         .cart-item:last-child {
             border-bottom: none;
         }
@@ -127,35 +151,14 @@
             font-weight: bold;
         }
 
+        /* Блок с количеством и кнопкой удаления */
         .cart-item .item-quantity {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
         }
 
-        .cart-item .item-quantity button {
-            background: #e0e0e0;
-            border: none;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: all 0.2s;
-        }
-
-        .cart-item .item-quantity button:hover {
-            background: #667eea;
-            color: white;
-        }
-
-        .cart-item .item-quantity span {
-            font-weight: bold;
-            min-width: 24px;
-            text-align: center;
-        }
-
+        /* Кнопка удаления товара из корзины */
         .cart-item .remove-btn {
             background: #e53e3e;
             color: white;
@@ -170,6 +173,7 @@
             background: #c53030;
         }
 
+        /* Заглушка «Корзина пуста» */
         .cart-empty {
             color: #999;
             text-align: center;
@@ -177,6 +181,7 @@
             font-size: 16px;
         }
 
+        /* Итоговая сумма */
         .total {
             font-size: 26px;
             font-weight: bold;
@@ -187,6 +192,7 @@
             margin-top: 10px;
         }
 
+        /* Кнопки под корзиной (очистить) */
         .cart-actions {
             display: flex;
             gap: 12px;
@@ -212,7 +218,9 @@
             background: #c53030;
         }
 
-        /* Форма заказа */
+        /* ============================================================
+           ФОРМА ОФОРМЛЕНИЯ ЗАКАЗА
+           ============================================================ */
         .order-form {
             margin-top: 30px;
             padding-top: 25px;
@@ -235,6 +243,7 @@
             font-size: 14px;
         }
 
+        /* Поля ввода и textarea */
         .order-form input,
         .order-form textarea {
             width: 100%;
@@ -246,6 +255,7 @@
             font-family: inherit;
         }
 
+        /* Подсветка поля при фокусе */
         .order-form input:focus,
         .order-form textarea:focus {
             outline: none;
@@ -258,6 +268,7 @@
             min-height: 80px;
         }
 
+        /* Главная зелёная кнопка отправки */
         .order-form .submit-btn {
             width: 100%;
             padding: 16px;
@@ -277,12 +288,14 @@
             box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
         }
 
+        /* Кнопка в состоянии «отправка...» */
         .order-form .submit-btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none;
         }
 
+        /* Ссылка «На главную» */
         .back-link {
             display: inline-block;
             margin-top: 25px;
@@ -301,7 +314,9 @@
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
 
-        /* Уведомление */
+        /* ============================================================
+           ВСПЛЫВАЮЩИЕ УВЕДОМЛЕНИЯ (внизу справа)
+           ============================================================ */
         .notification {
             position: fixed;
             bottom: 20px;
@@ -324,6 +339,7 @@
             background: #e53e3e;
         }
 
+        /* Анимация выезда уведомления справа */
         @keyframes slideIn {
             from {
                 transform: translateX(100%);
@@ -335,7 +351,9 @@
             }
         }
 
-        /* Мобильная адаптация */
+        /* ============================================================
+           МОБИЛЬНАЯ АДАПТАЦИЯ
+           ============================================================ */
         @media (max-width: 600px) {
             body {
                 padding: 10px;
@@ -378,7 +396,7 @@
             }
 
             .cart-item .item-quantity {
-                justify-content: center;
+                justify-content: space-between;
             }
 
             .cart-item .remove-btn {
@@ -443,25 +461,60 @@
     </style>
 </head>
 <body>
+
+    <!-- ============================================================
+         МОДАЛЬНОЕ ОКНО С QR-КОДОМ
+         Скрыто по умолчанию (display:none).
+         Показывается из JS через showQrModal() -> display:flex.
+         Закрывается кликом по крестику или по тёмному фону.
+         ============================================================ -->
+    <div id="qrModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:3000; align-items:center; justify-content:center; padding:15px;">
+        <div style="background:#1e1e1e; color:white; padding:30px; border-radius:15px; max-width:360px; width:100%; text-align:center; position:relative;">
+
+            <!-- Кнопка закрытия (крестик) -->
+            <button id="qrModalClose" style="position:absolute; top:10px; right:15px; background:none; border:none; color:white; font-size:28px; line-height:1; cursor:pointer;">&times;</button>
+
+            <h2 style="color:#4CAF50; margin-top:0;">Заказ оформлен!</h2>
+            <p>Номер заказа: <strong id="qrModalInvId"></strong></p>
+            <p>Отсканируйте QR-код в приложении банка:</p>
+
+            <!-- Картинка QR-кода; src подставляется из ответа сервера -->
+            <img id="qrModalImg" src="" alt="QR-код"
+                 style="width:250px; height:250px; border-radius:10px; background:white; padding:10px; margin:15px 0;">
+
+            <p style="color:#ef5350; font-size:14px;">
+                После оплаты мы вышлем вам ссылку на ваши файлы на вашу почту.
+            </p>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         ОСНОВНОЙ КОНТЕЙНЕР СТРАНИЦЫ
+         ============================================================ -->
     <div class="container">
         <h1>🛒 Оформление заказа</h1>
-        
-        <!-- Товары -->
+
+        <!-- ---------- БЛОК ТОВАРОВ ----------
+             Список товаров рендерится из JS в этот div. -->
         <h2>📦 Товары</h2>
         <div id="products"></div>
-        
-        <!-- Корзина -->
+
+        <!-- ---------- БЛОК КОРЗИНЫ ----------
+             Содержимое корзины рендерится из JS. -->
         <h2>🛍️ Корзина</h2>
         <div id="cart">
             <p class="cart-empty">Корзина пуста</p>
         </div>
+
+        <!-- Итоговая сумма -->
         <div id="total" class="total">Итого: 0 ₽</div>
-        
+
+        <!-- Кнопка очистки корзины -->
         <div class="cart-actions">
             <button class="clear-btn" onclick="clearCart()">🗑️ Очистить корзину</button>
         </div>
-        
-        <!-- Форма заказа -->
+
+        <!-- ---------- ФОРМА ЗАКАЗА ---------- -->
         <div class="order-form">
             <h2>📝 Данные для заказа</h2>
             <form id="orderForm">
@@ -484,15 +537,23 @@
                 <button type="submit" class="submit-btn">✅ Отправить заказ</button>
             </form>
         </div>
-        
+
+        <!-- Ссылка возврата на главную -->
         <a href="/" class="back-link">🏠 На главную</a>
     </div>
 
     <script>
-        let products = [];
-        let cart = [];
+        /* ============================================================
+           ГЛОБАЛЬНОЕ СОСТОЯНИЕ
+           ============================================================ */
+        let products = [];  // массив товаров, загружается с сервера
+        let cart = [];      // массив товаров в корзине: { name, price, quantity }
 
-        // Загрузка товаров
+        /* ============================================================
+           ЗАГРУЗКА ТОВАРОВ С СЕРВЕРА
+           GET /api/info -> { products: [ { name, price }, ... ] }
+           Если API недоступен — используются тестовые данные.
+           ============================================================ */
         fetch('/api/info')
             .then(res => res.json())
             .then(data => {
@@ -500,7 +561,7 @@
                 renderProducts();
             })
             .catch(() => {
-                // Если API недоступен, используем тестовые данные
+                // Fallback: тестовые товары, если бэкенд не отвечает
                 products = [
                     { name: "Ukey Windows PE", price: 1200 },
                     { name: "Ukey Kali Linux", price: 1500 },
@@ -510,12 +571,18 @@
                 showNotification('⚠️ Используются тестовые данные', 'error');
             });
 
-        // Функция показа уведомлений
+        /* ============================================================
+           ВСПЛЫВАЮЩЕЕ УВЕДОМЛЕНИЕ
+           message — текст, type — 'success' (зелёный) или 'error' (красный).
+           Автоматически исчезает через 3 секунды.
+           ============================================================ */
         function showNotification(message, type = 'success') {
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
             notification.textContent = message;
             document.body.appendChild(notification);
+
+            // Плавное затухание перед удалением
             setTimeout(() => {
                 notification.style.opacity = '0';
                 notification.style.transition = 'opacity 0.3s';
@@ -523,11 +590,42 @@
             }, 3000);
         }
 
-        // Отображение товаров
+        /* ============================================================
+           МОДАЛЬНОЕ ОКНО QR-КОДА
+           ============================================================ */
+
+        // Показать модальное окно с QR-кодом
+        function showQrModal(qrUrl, invId) {
+            document.getElementById('qrModalImg').src = qrUrl;
+            document.getElementById('qrModalInvId').textContent = invId;
+            document.getElementById('qrModal').style.display = 'flex';
+        }
+
+        // Закрытие по крестику
+        document.getElementById('qrModalClose').addEventListener('click', () => {
+            document.getElementById('qrModal').style.display = 'none';
+        });
+
+        // Закрытие по клику на тёмный фон (не на саму карточку)
+        document.getElementById('qrModal').addEventListener('click', (e) => {
+            if (e.target.id === 'qrModal') {
+                document.getElementById('qrModal').style.display = 'none';
+            }
+        });
+
+        /* ============================================================
+           РЕНДЕР СПИСКА ТОВАРОВ
+           Для каждого товара проверяем, есть ли он уже в корзине:
+           - если есть -> кнопка disabled, текст «✓ В корзине»
+           - если нет  -> кнопка активна, текст «➕ Добавить»
+           ============================================================ */
         function renderProducts() {
             const container = document.getElementById('products');
             container.innerHTML = '';
+
             products.forEach((product, index) => {
+                const inCart = cart.some(item => item.name === product.name);
+
                 const div = document.createElement('div');
                 div.className = 'product-item';
                 div.innerHTML = `
@@ -535,30 +633,46 @@
                         <span class="product-name">${product.name}</span>
                         <span class="product-price">${product.price.toLocaleString()} ₽</span>
                     </div>
-                    <button onclick="addToCart(${index})">➕ Добавить</button>
+                    <button onclick="addToCart(${index})" ${inCart ? 'disabled style="background:#ccc; cursor:not-allowed;"' : ''}>
+                        ${inCart ? '✓ В корзине' : '➕ Добавить'}
+                    </button>
                 `;
                 container.appendChild(div);
             });
         }
 
-        // Добавление в корзину
+        /* ============================================================
+           ДОБАВЛЕНИЕ В КОРЗИНУ
+           Правило: не больше 1 шт. одной позиции.
+           Если товар уже в корзине — показываем уведомление и выходим.
+           ============================================================ */
         function addToCart(index) {
             const product = products[index];
             const existing = cart.find(item => item.name === product.name);
+
             if (existing) {
-                existing.quantity++;
-            } else {
-                cart.push({ ...product, quantity: 1 });
+                showNotification(`⚠️ ${product.name} уже в корзине (макс. 1 шт.)`, 'error');
+                return;
             }
-            renderCart();
+
+            // Добавляем ровно 1 шт.
+            cart.push({ ...product, quantity: 1 });
+
+            renderProducts(); // обновить состояние кнопок «Добавить / В корзине»
+            renderCart();     // перерисовать корзину
             showNotification(`✅ ${product.name} добавлен в корзину`);
         }
 
-        // Отображение корзины
+        /* ============================================================
+           РЕНДЕР КОРЗИНЫ
+           Каждый товар: название, цена, надпись «1 шт.», кнопка «Удалить».
+           Внизу — итоговая сумма.
+           ============================================================ */
         function renderCart() {
             const container = document.getElementById('cart');
             const totalContainer = document.getElementById('total');
-            
+
+            // Если корзина пуста — заглушка
             if (cart.length === 0) {
                 container.innerHTML = '<p class="cart-empty">Корзина пуста</p>';
                 totalContainer.textContent = 'Итого: 0 ₽';
@@ -567,9 +681,11 @@
 
             container.innerHTML = '';
             let total = 0;
+
             cart.forEach((item, index) => {
                 const itemTotal = parseInt(item.price) * item.quantity;
                 total += itemTotal;
+
                 const div = document.createElement('div');
                 div.className = 'cart-item';
                 div.innerHTML = `
@@ -578,65 +694,73 @@
                         <span class="item-price">${itemTotal.toLocaleString()} ₽</span>
                     </div>
                     <div class="item-quantity">
-                        <button onclick="changeQuantity(${index}, -1)">−</button>
-                        <span>${item.quantity}</span>
-                        <button onclick="changeQuantity(${index}, 1)">+</button>
-                        <button class="remove-btn" onclick="removeFromCart(${index})">✕</button>
+                        <span style="color:#888; font-weight:normal;">1 шт.</span>
+                        <button class="remove-btn" onclick="removeFromCart(${index})">✕ Удалить</button>
                     </div>
                 `;
                 container.appendChild(div);
             });
+
             totalContainer.textContent = `Итого: ${total.toLocaleString()} ₽`;
         }
 
-        // Изменение количества
-        function changeQuantity(index, delta) {
-            const newQuantity = cart[index].quantity + delta;
-            if (newQuantity <= 0) {
-                removeFromCart(index);
-            } else {
-                cart[index].quantity = newQuantity;
-                renderCart();
-            }
-        }
-
-        // Удаление из корзины
+        /* ============================================================
+           УДАЛЕНИЕ ИЗ КОРЗИНЫ
+           После удаления нужно перерисовать и товары (кнопка снова
+           станет активной), и корзину.
+           ============================================================ */
         function removeFromCart(index) {
             const name = cart[index].name;
             cart.splice(index, 1);
+
+            renderProducts(); // вернуть кнопку «Добавить» у товара
             renderCart();
             showNotification(`🗑️ ${name} удален из корзины`);
         }
 
-        // Очистка корзины
+        /* ============================================================
+           ОЧИСТКА КОРЗИНЫ
+           Удаляет все товары и обновляет интерфейс.
+           ============================================================ */
         function clearCart() {
-            if (cart.length === 0) return;
+            if (cart.length === 0) return; // нечего очищать
             cart = [];
+            renderProducts();
             renderCart();
             showNotification('🗑️ Корзина очищена');
         }
 
-        // Отправка заказа
+        /* ============================================================
+           ОТПРАВКА ЗАКАЗА НА СЕРВЕР
+           POST /api/order с телом:
+           { name, email, phone, comment, cart: [...], total }
+           Ожидаемый ответ: { message, invId, qrUrl }
+           ============================================================ */
         document.getElementById('orderForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
+            e.preventDefault(); // не перезагружать страницу
+
+            // Проверка 1: корзина не пуста
             if (cart.length === 0) {
                 showNotification('❌ Корзина пуста! Добавьте товары.', 'error');
                 return;
             }
 
+            // Собираем данные из формы
             const name = document.getElementById('name').value.trim();
             const email = document.getElementById('email').value.trim();
             const phone = document.getElementById('phone').value.trim();
             const comment = document.getElementById('comment').value.trim();
 
+            // Проверка 2: обязательные поля заполнены
             if (!name || !email || !phone) {
                 showNotification('❌ Заполните все обязательные поля!', 'error');
                 return;
             }
 
+            // Считаем итоговую сумму
             const total = cart.reduce((sum, item) => sum + parseInt(item.price) * item.quantity, 0);
 
+            // Формируем тело запроса
             const orderData = {
                 name,
                 email,
@@ -650,6 +774,7 @@
                 total
             };
 
+            // Блокируем кнопку на время отправки
             const submitBtn = document.querySelector('.submit-btn');
             submitBtn.textContent = '⏳ Отправка...';
             submitBtn.disabled = true;
@@ -662,19 +787,29 @@
                 });
 
                 const result = await response.json();
-                
+
                 if (response.ok) {
+                    // Успех: уведомление, очистка корзины и формы
                     showNotification(`✅ ${result.message || 'Заказ отправлен!'}`, 'success');
                     cart = [];
+                    renderProducts();
                     renderCart();
                     document.getElementById('orderForm').reset();
+
+                    // Если сервер вернул QR-код — показываем модальное окно
+                    if (result.qrUrl) {
+                        showQrModal(result.qrUrl, result.invId);
+                    }
                 } else {
+                    // Сервер вернул ошибку (4xx/5xx)
                     showNotification(`❌ ${result.message || 'Ошибка отправки'}`, 'error');
                 }
             } catch (error) {
+                // Сетевая ошибка / сервер недоступен
                 showNotification('❌ Ошибка соединения с сервером', 'error');
                 console.error('Error:', error);
             } finally {
+                // В любом случае возвращаем кнопку в исходное состояние
                 submitBtn.textContent = '✅ Отправить заказ';
                 submitBtn.disabled = false;
             }

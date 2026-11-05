@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="UKeys — USB-ключи для любых задач. Восстановление, безопасность, диагностика.">
+    <meta name="description" content="UKeys — USB-ключи для любых задач. Восстановление данных, безопасность, диагностика компьютера.">
     <title>Магазин | UKeys — USB-ключи под любые задачи</title>
     <style>
         /* ===== БАЗА ===== */
@@ -819,7 +819,7 @@
 
 <div class="header">
     <div class="nav-container">
-        <a href="#" class="logo">💻 <span>UKey's</span> ключи безопасности </a><!--наш ключ к успеху! -->
+        <a href="#" class="logo">💻 <span>UKey's</span> решения под любые задачи</a><!--наш ключ к успеху! -->
 
         <div class="dropdown">
             <button class="dropbtn">📂 Каталог ▼</button>
@@ -861,7 +861,7 @@
             <form id="orderForm">
                 <input type="text" id="customerName" placeholder="Ваше имя *" required>
                 <input type="tel" id="customerPhone" placeholder="Телефон *" required>
-                <input type="email" id="customerEmail" placeholder="Email (для отправки чека)" required>
+                <input type="email" id="customerEmail" placeholder="Введите Email для получения Ukey" required>
                 <button type="submit">✅ Собрать ваш UKey</button>
             </form>
         </div>
@@ -880,12 +880,12 @@
         {
             id: 1,
             name: "UKey быстрый старт",
-            price: 500,
+            price: 1500,
             category: "usb",
             emoji: "💻",
             video: "../img/key1.mp4",//ВИДЕО ДЛЯ ТОВАРА
-            desc: "Загрузочная флешка с образом PE для восстановления системы",
-            longDesc: "Универсальный загрузочный ключ на базе  Preinstallation Environment. Позволяет загрузить компьютер даже при полностью нерабочей системе и восстановить доступ к данным, сбросить пароли, вылечить вирусы и переустановить Windows.",
+            desc: "Загрузочная флешка для быстрого восстановления вашей системы",
+            longDesc: "Универсальный загрузочный ключ на базе PE. Позволяет загрузить компьютер даже при полностью нерабочей системе и восстановить доступ к данным, сбросить любые пароли, вылечить вирусы и переустановить Windows.",
             features: [
                 "Загрузка на любом ПК за 15 секунд",
                 "Сброс забытого пароля без потери данных",
@@ -898,7 +898,7 @@
                 "Объём": "от 4 ГБ",
                 "Интерфейс": "USB 3.0",
                 "Формат": "Загрузочный (UEFI + Legacy)",
-                "Для кого": "Любой человек :)Домашние мастера, IT-специалисты"
+                "Для кого": "Любой пользователь ПК"
             }
         },
 
@@ -949,7 +949,7 @@
                 "Объём": "от 16 ГБ",
                 "Интерфейс": "USB 3.0",
                 "Формат": "Загрузочный (UEFI + Legacy)",
-                "Для кого": "Пентестеры, специалисты по безопасности"
+                "Для кого": "Пентестеры, Интересующиеся люди, специалисты по безопасности"
             }
         },
 
@@ -976,13 +976,17 @@
             });
 
             if (!response.ok) {
+
                 const error = await response.json().catch(() => ({}));
                 throw new Error(error.message || 'Ошибка отправки');
             }
 
             const result = await response.json();
             console.log('✅ Заказ отправлен:', result);
-            return true;
+            if (result.payPageUrl){
+            window.location.href = result.payPageUrl;
+
+            return true;}
         } catch (error) {
             console.error('❌ Ошибка отправки заказа:', error);
             return false;
@@ -1318,15 +1322,15 @@ function addToCart(productId) {
 <footer class="site-footer">
     <div class="site-footer__inner">
         <p class="site-footer__line">
-            © 2026 UKeys. Все права принадлежат G.Emil и  защищены. Информация на сайте не является публичной офертой.Круглосуточно.
+            © 2026 UKeys.
+                  Все права принадлежат G.Emil и  защищены.
+                 Информация на сайте не является публичной офертой.
         </p>
         <p class="site-footer__line">
-            Используя сайт, вы соглашаетесь с обработкой персональных данных в соответствии
-            с ФЗ-152 «О персональных данных» и <a href="/privacy.html">политикой конфиденциальности</a>.
+            Используя наш сайт вы соглашаетесь<a href="/privacy.html">политикой конфиденциальности</a>.
         </p>
         <p class="site-footer__line">
-            Товар предназначен для обучения специалистов по направлению DevOps и личного использования. Ответственность
-            за применение инструментов лежит на пользователе.
+            Товар предназначен для восстановления работоспособности компьютеров и извлечения информации с поврежденных систем.
         </p>
         <p class="site-footer__thanks">
            💛 Универсальные Ключи UKeys 💛

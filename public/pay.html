@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оплата заказа — UKeys</title>
+    <style>
+        /* Темная тема в стиле вашего сайта */
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow:hidden;
+        }
+        .payment-box {
+            background-color: #1e1e1e;
+            padding: 40px 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid #333;
+            max-width: 400px;
+            width: 90%;
+        }
+        h1 {
+            color: #4CAF50;
+            margin-top: 0;
+            font-size: 24px;
+        }
+        .order-info {
+            color: #aaa;
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+        .order-info strong {
+            color: #fff;
+        }
+        .qr-wrapper {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 10px 0 20px 0;
+        }
+        .qr-wrapper img {
+            width: 250px;
+            height: 250px;
+            display: block;
+        }
+        .warning {
+            color: #ef5350;
+            font-size: 13px;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+        .btn-close {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-close:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="payment-box">
+        <h1>✅ Заказ оформлен!</h1>
+        
+        <!-- Сюда скрипт подставит номер заказа из ссылки -->
+        <p class="order-info">Номер заказа: <strong id="display-invId">...</strong></p>
+        
+        <p class="order-info">Отсканируйте QR-код в приложении банка:</p>
+        
+        <div class="qr-wrapper">
+            <!-- Берем вашу картинку из папки public -->
+            <img src="/qr.png" alt="QR-код для оплаты">
+        </div>
+        
+        <p class="warning">После оплаты мы вышлем вам ссылку на файлы на указанную почту.</p>
+        
+        <!-- Кнопка возвращает на главную страницу -->
+        <button class="btn-close" onclick="window.location.href = '/'">Вернуться в магазин</button>
+    </div>
+
+    <script>
+        // Этот скрипт читает ссылку (URL), чтобы показать номер заказа
+        // Ссылка будет выглядеть так: /pay.html?invId=123456
+        const urlParams = new URLSearchParams(window.location.search);
+        const invId = urlParams.get('invId');
+        
+        if (invId) {
+            document.getElementById('display-invId').innerText = '№' + invId;
+        } else {
+            document.getElementById('display-invId').innerText = 'неизвестен';
+        }
+    </script>
+
+</body>
+</html>
