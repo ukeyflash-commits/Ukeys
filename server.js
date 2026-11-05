@@ -219,11 +219,7 @@ Email: ukeyflash@gmail.com
 // 8. ПОЧТА
 // ------------------------------------------------------------
 const EMAIL_CONFIG = {
-<<<<<<< HEAD
     user: 'info@ukeyflash.ru',
-=======
-    user:        'info@ukeyflash.ru',
->>>>>>> 3f88213 (bi_smi_LLyahi: поправил все работает)
     password:    process.env.EMAIL_PASSWORD,
     notifyEmail: process.env.NOTIFY_EMAIL || 'ukeyflash@gmail.com',
 };
@@ -231,11 +227,7 @@ const EMAIL_CONFIG = {
 const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
-<<<<<<< HEAD
    secure: true,
-=======
-    secure: true,
->>>>>>> 3f88213 (bi_smi_LLyahi: поправил все работает)
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASSWORD,
