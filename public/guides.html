@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Инструкции — UKeys</title>
+<meta name="description" content="Как записать Kali Linux, WinPE, Windows 10/11 и Ubuntu/Mint на флешку через UltraISO. Пошагово, просто, с FAQ.">
+<style>
+  :root{
+    --bg:#f7f9fc;
+    --card:#ffffff;
+    --text:#1a2332;
+    --muted:#5b6b7f;
+    --accent:#0b6cf0;
+    --accent-dark:#084fb0;
+    --warn-bg:#fff4e5;
+    --warn-border:#f5a623;
+    --ok-bg:#e8f7ee;
+    --ok-border:#2ecc71;
+    --border:#e2e9f2;
+    --radius:14px;
+    --shadow:0 2px 10px rgba(20,40,80,.06);
+  }
+  html[data-theme="dark"]{
+    --bg:#0e1622;
+    --card:#16212f;
+    --text:#e6edf6;
+    --muted:#93a4b8;
+    --accent:#3b8bff;
+    --accent-dark:#2a6fd6;
+    --warn-bg:#3a2a10;
+    --warn-border:#f5a623;
+    --ok-bg:#12301f;
+    --ok-border:#2ecc71;
+    --border:#243244;
+    --shadow:0 2px 10px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.65;
+    font-size:17px;
+    transition:background .25s, color .25s;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:24px 18px 60px}
+
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:12px;margin-bottom:18px;flex-wrap:wrap;
+  }
+  .topbar__right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .logo{
+    font-weight:800;font-size:1.15rem;letter-spacing:.3px;
+    color:var(--text);text-decoration:none;
+  }
+  .logo span{color:var(--accent)}
+
+  .back-to-shop{
+    display:inline-flex;align-items:center;gap:6px;
+    background:var(--card);border:1px solid var(--border);color:var(--text);
+    padding:8px 14px;border-radius:10px;cursor:pointer;font-size:.9rem;
+    font-weight:600;transition:.2s;box-shadow:var(--shadow);
+    text-decoration:none;white-space:nowrap;
+  }
+  .back-to-shop:hover{border-color:var(--accent);color:var(--accent)}
+
+  .theme-toggle{
+    background:var(--card);border:1px solid var(--border);color:var(--text);
+    padding:8px 14px;border-radius:10px;cursor:pointer;font-size:.9rem;
+    font-weight:600;transition:.2s;box-shadow:var(--shadow);
+  }
+  .theme-toggle:hover{border-color:var(--accent)}
+
+  .crumbs{
+    font-size:.85rem;color:var(--muted);margin-bottom:14px;
+  }
+  .crumbs a{color:var(--accent);text-decoration:none}
+  .crumbs a:hover{text-decoration:underline}
+  .crumbs .sep{margin:0 6px;opacity:.6}
+
+  header.hero{
+    background:linear-gradient(135deg,#0b6cf0,#084fb0);
+    color:#fff;border-radius:var(--radius);
+    padding:28px 24px;margin-bottom:26px;
+    box-shadow:0 8px 24px rgba(11,108,240,.22);
+  }
+  header.hero h1{margin:0 0 10px;font-size:1.55rem;line-height:1.3}
+  header.hero p{margin:0;opacity:.94;font-size:.98rem}
+  .badge{
+    display:inline-block;background:rgba(255,255,255,.18);
+    padding:4px 12px;border-radius:999px;font-size:.8rem;
+    margin-bottom:12px;letter-spacing:.3px;
+  }
+
+  .card{
+    background:var(--card);border-radius:var(--radius);
+    padding:22px;margin-bottom:18px;
+    box-shadow:var(--shadow);
+    border:1px solid var(--border);
+  }
+  .card h2{
+    font-size:1.18rem;margin:0 0 14px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .card h3{font-size:1rem;margin:18px 0 8px}
+  .step-num{
+    flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;
+    width:32px;height:32px;border-radius:50%;
+    background:var(--accent);color:#fff;font-size:.95rem;font-weight:700;
+  }
+  ul,ol{padding-left:22px;margin:10px 0}
+  li{margin:6px 0}
+  code{
+    background:rgba(11,108,240,.08);padding:2px 7px;border-radius:6px;
+    font-size:.9em;font-family:"Consolas",monospace;color:var(--accent);
+  }
+  html[data-theme="dark"] code{background:rgba(59,139,255,.15)}
+  .note{
+    border-left:4px solid var(--warn-border);
+    background:var(--warn-bg);
+    padding:12px 16px;border-radius:8px;margin:14px 0;
+    font-size:.95rem;
+  }
+  .note strong{color:#8a5300}
+  html[data-theme="dark"] .note strong{color:#ffc266}
+  .ok{
+    border-left:4px solid var(--ok-border);
+    background:var(--ok-bg);
+    padding:12px 16px;border-radius:8px;margin:14px 0;
+    font-size:.95rem;
+  }
+
+  .toc{
+    background:var(--card);border-radius:var(--radius);
+    padding:18px 22px;margin-bottom:18px;
+    box-shadow:var(--shadow);border:1px solid var(--border);
+  }
+  .toc h2{font-size:1.05rem;margin:0 0 10px}
+  .toc ol{margin:0;padding-left:22px}
+  .toc a{color:var(--accent);text-decoration:none;cursor:pointer}
+  .toc a:hover{text-decoration:underline}
+
+  .memo{
+    background:#0b1c33;color:#e8eef8;border-radius:var(--radius);
+    padding:20px 22px;margin:18px 0;
+  }
+  .memo h2{color:#fff;font-size:1.05rem;margin:0 0 12px}
+  .memo ol{padding-left:22px;margin:0}
+  .memo li{margin:7px 0}
+  .memo code{background:rgba(255,255,255,.12);color:#a8d1ff}
+
+  .faq-item{border-bottom:1px solid var(--border);padding:14px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-item h3{margin:0 0 6px;font-size:.98rem;color:var(--text)}
+  .faq-item p{margin:0;font-size:.94rem;color:var(--muted)}
+
+  a.btn, button.btn{
+    display:inline-block;background:var(--accent);color:#fff;
+    padding:11px 22px;border-radius:10px;text-decoration:none;
+    font-weight:600;font-size:.95rem;transition:.2s;border:none;
+    cursor:pointer;font-family:inherit;
+  }
+  a.btn:hover, button.btn:hover{background:var(--accent-dark)}
+  a.btn.ghost, button.btn.ghost{
+    background:transparent;color:var(--accent);
+    border:1.5px solid var(--accent);
+  }
+  a.btn.ghost:hover, button.btn.ghost:hover{
+    background:var(--accent);color:#fff;
+  }
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+
+  .hub-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:16px;margin-top:8px;
+  }
+  .hub-card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:var(--radius);padding:20px;
+    box-shadow:var(--shadow);text-decoration:none;color:var(--text);
+    transition:.2s;display:flex;flex-direction:column;gap:8px;
+  }
+  .hub-card:hover{
+    transform:translateY(-3px);
+    border-color:var(--accent);
+    box-shadow:0 8px 20px rgba(11,108,240,.18);
+  }
+  .hub-card .icon{font-size:1.8rem;line-height:1}
+  .hub-card h3{margin:0;font-size:1.05rem}
+  .hub-card p{margin:0;font-size:.9rem;color:var(--muted)}
+
+  .shot{
+    margin:14px 0;border-radius:10px;overflow:hidden;
+    border:1px solid var(--border);background:rgba(11,108,240,.05);
+  }
+  .shot img{display:block;width:100%;height:auto}
+  .shot-placeholder{
+    padding:28px 16px;text-align:center;color:var(--muted);
+    font-size:.9rem;font-style:italic;
+  }
+
+  .page{display:none}
+  .page.active{display:block;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  footer{
+    text-align:center;color:var(--muted);font-size:.88rem;
+    margin-top:30px;padding-top:18px;border-top:1px solid var(--border);
+  }
+  footer a{color:var(--accent);text-decoration:none}
+  footer a:hover{text-decoration:underline}
+
+  @media(max-width:520px){
+    body{font-size:16px}
+    header.hero{padding:22px 18px}
+    header.hero h1{font-size:1.3rem}
+    .card{padding:18px 16px}
+    .back-to-shop,.theme-toggle{font-size:.82rem;padding:7px 11px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <a href="#hub" class="logo">UKey<span>s</span> · Инструкции</a>
+    <div class="topbar__right">
+      <a href="/" class="back-to-shop">🛒 В магазин</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Сменить тему">☀️ Светлая тема</button>
+    </div>
+  </div>
+
+  <nav class="crumbs" id="crumbs" aria-label="Хлебные крошки"></nav>
+
+  <!-- ================= ХАБ ================= -->
+  <div class="page active" id="page-hub">
+    <header class="hero">
+      <span class="badge">UKeys · Инструкции</span>
+      <h1>Как записать образ на флешку через UltraISO</h1>
+      <p>Подробные и простые инструкции для Windows, Linux и PE-образов. Выберите нужную систему ниже.</p>
+    </header>
+
+    <div class="card">
+      <h2><span class="step-num">📚</span> Выберите инструкцию</h2>
+      <div class="hub-grid">
+        <a class="hub-card" href="#kali">
+          <div class="icon">🐉</div>
+          <h3>Kali Linux</h3>
+          <p>Запись образа Kali через UltraISO (режим HDD).</p>
+        </a>
+        <a class="hub-card" href="#winpe">
+          <div class="icon">🛠️</div>
+          <h3>WinPE</h3>
+          <p>Загрузочные сборки WinPE и реаниматоры.</p>
+        </a>
+        <a class="hub-card" href="#windows">
+          <div class="icon">🪟</div>
+          <h3>Windows 10 / 11</h3>
+          <p>Установка Windows с флешки через UltraISO.</p>
+        </a>
+        <a class="hub-card" href="#linux">
+          <div class="icon">🐧</div>
+          <h3>Ubuntu / Linux Mint</h3>
+          <p>Запись Linux-дистрибутивов на флешку.</p>
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="step-num">⬇️</span> Что понадобится для любой инструкции</h2>
+      <ul>
+        <li>Компьютер с Windows.</li>
+        <li>Программа <strong>UltraISO</strong>.</li>
+        <li>Флешка от 4–8 ГБ (зависит от образа).</li>
+        <li>Скачанный ISO-образ.</li>
+      </ul>
+      <div class="note">
+        <strong>⚠️ Важно:</strong> при записи все данные с флешки будут удалены. Скопируйте нужные файлы заранее.
+      </div>
+      <div class="btn-row">
+        <a class="btn" href="https://www.ultraiso.net/" target="_blank" rel="noopener">⬇️ Скачать UltraISO</a>
+        <a class="btn ghost" href="/">🛒 Перейти в магазин</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= KALI ================= -->
+  <div class="page" id="page-kali">
+    <header class="hero">
+      <span class="badge">UKeys · Инструкции</span>
+      <h1>Запись образа Kali Linux на флешку через UltraISO (режим HDD)</h1>
+      <p>Подробная и простая инструкция: от запуска программы до загрузки с флешки.</p>
+    </header>
+
+    <nav class="toc"><h2>Содержание</h2><ol>
+      <li><a onclick="scrollToStep('k-need')">Что понадобится</a></li>
+      <li><a onclick="scrollToStep('k-step1')">Запуск UltraISO от администратора</a></li>
+      <li><a onclick="scrollToStep('k-step2')">Открытие ISO-образа</a></li>
+      <li><a onclick="scrollToStep('k-step3')">Вставка флешки и окно записи</a></li>
+      <li><a onclick="scrollToStep('k-step4')">Проверка выбранной флешки</a></li>
+      <li><a onclick="scrollToStep('k-step5')">Режим записи USB-HDD+</a></li>
+      <li><a onclick="scrollToStep('k-step6')">Форматирование флешки</a></li>
+      <li><a onclick="scrollToStep('k-step7')">Начало записи</a></li>
+      <li><a onclick="scrollToStep('k-step8')">Завершение и извлечение</a></li>
+      <li><a onclick="scrollToStep('k-faq')">Частые вопросы</a></li>
+      <li><a onclick="scrollToStep('k-memo')">Короткая памятка</a></li>
+    </ol></nav>
+
+    <section class="card" id="k-need">
+      <h2><span class="step-num">✓</span> Что понадобится</h2>
+      <ul>
+        <li>Компьютер с Windows.</li>
+        <li>Программа <strong>UltraISO</strong>.</li>
+        <li>Флешка объёмом <strong>от 8 ГБ</strong>.</li>
+        <li>ISO-образ Kali Linux (вида <code>kali-linux-2024.x-installer-amd64.iso</code>).</li>
+      </ul>
+      <div class="note"><strong>⚠️ Важно:</strong> при записи все данные с флешки будут удалены.</div>
+      <div class="shot"><div class="shot-placeholder">📷 Скриншот: содержимое ISO Kali в UltraISO</div></div>
+    </section>
+
+    <section class="card" id="k-step1">
+      <h2><span class="step-num">1</span> Запустите UltraISO от имени администратора</h2>
+      <p>Найдите ярлык UltraISO, нажмите <strong>правой кнопкой мыши</strong> → <strong>«Запуск от имени администратора»</strong>.</p>
+      <p>Если появится окно с предложением купить программу — нажмите <strong>«Продолжить试用»</strong> (Continue Trial).</p>
+      <div class="shot"><div class="shot-placeholder">📷 Скриншот: контекстное меню «Запуск от имени администратора»</div></div>
+    </section>
+
+    <section class="card" id="k-step2">
+      <h2><span class="step-num">2</span> Откройте скачанный ISO-образ</h2>
+      <p>Меню <strong>«Файл»</strong> → <strong>«Открыть…»</strong> → выберите файл <code>.iso</code> → <strong>«Открыть»</strong>.</p>
+      <p>В левой части окна появится содержимое образа.</p>
+    </section>
+
+    <section class="card" id="k-step3">
+      <h2><span class="step-num">3</span> Вставьте флешку и откройте окно записи</h2>
+      <p>Вставьте флешку. В UltraISO: <strong>«Самозагрузка»</strong> → <strong>«Записать образ жёсткого диска…»</strong>.</p>
+      <div class="shot"><div class="shot-placeholder">📷 Скриншот: меню «Самозагрузка» → «Записать образ жёсткого диска»</div></div>
+    </section>
+
+    <section class="card" id="k-step4">
+      <h2><span class="step-num">4</span> Проверьте, что выбрана именно ваша флешка</h2>
+      <p>В строке <strong>«Disk Drive»</strong> должен быть ваш USB-накопитель. Проверьте букву и объём. Если сомневаетесь — выньте флешку и посмотрите, какой диск исчез.</p>
+      <div class="note"><strong>⚠️ Внимание:</strong> выбор не того диска стирает данные с другого носителя.</div>
+      <div class="shot"><div class="shot-placeholder">📷 Скриншот: окно Write Disk Image с выбранной флешкой</div></div>
+    </section>
+
+    <section class="card" id="k-step5">
+      <h2><span class="step-num">5</span> Выберите режим записи HDD</h2>
+      <p>В строке <strong>«Write Method»</strong> выберите <strong>USB-HDD+</strong>.</p>
+      <p>Если не загрузится — попробуйте <strong>USB-HDD</strong> или <strong>USB-ZIP+</strong>.</p>
+    </section>
+
+    <section class="card" id="k-step6">
+      <h2><span class="step-num">6</span> Отформатируйте флешку (рекомендуется)</h2>
+      <p>Нажмите <strong>«Format»</strong>. Выберите:</p>
+      <ul>
+        <li><strong>FAT32</strong> — образ меньше 4 ГБ, максимальная совместимость;</li>
+        <li><strong>NTFS</strong> — образ больше 4 ГБ.</li>
+      </ul>
+      <p>Нажмите «Start», дождитесь окончания, закройте окно.</p>
+    </section>
+
+    <section class="card" id="k-step7">
+      <h2><span class="step-num">7</span> Начните запись</h2>
+      <p>Нажмите <strong>«Write»</strong> → подтвердите «Да». Обычно занимает <strong>3–15 минут</strong>. Не вынимайте флешку.</p>
+    </section>
+
+    <section class="card" id="k-step8">
+      <h2><span class="step-num">8</span> Дождитесь сообщения об успехе</h2>
+      <p>Появится <strong>«Burn Success»</strong>. Нажмите «Return», закройте UltraISO. Извлеките флешку через «Безопасное извлечение».</p>
+      <div class="ok"><strong>✅ Проверка:</strong> откройте флешку — должны быть папки <code>boot</code>, <code>EFI</code>, <code>live</code> и файл <code>isolinux</code>.</div>
+    </section>
+
+    <section class="card" id="k-faq">
+      <h2><span class="step-num">?</span> Частые вопросы</h2>
+      <div class="faq-item"><h3>Флешка не видна в UltraISO</h3><p>Закройте программу, вставьте флешку в другой порт (сзади системного блока), запустите UltraISO от администратора.</p></div>
+      <div class="faq-item"><h3>Ошибка при записи</h3><p>Смените порт, отключите антивирус, проверьте образ (перекачайте ISO) или замените флешку.</p></div>
+      <div class="faq-item"><h3>Компьютер не загружается с флешки</h3><p>В BIOS/UEFI (F2, F12, Del, Esc) поставьте флешку первой в списке загрузки. Если не помогло — перезапишите в режиме USB-HDD.</p></div>
+    </section>
+
+    <section class="memo" id="k-memo">
+      <h2>Короткая памятка</h2>
+      <ol>
+        <li>UltraISO → от администратора → Trial.</li>
+        <li>Файл → Открыть → выбрать ISO.</li>
+        <li>Самозагрузка → Записать образ жёсткого диска.</li>
+        <li>Выбрать флешку (проверить букву и объём!).</li>
+        <li>Режим: <code>USB-HDD+</code>.</li>
+        <li>Format → Write → ждать → готово.</li>
+      </ol>
+    </section>
+
+    <div class="btn-row">
+      <a class="btn" href="https://www.ultraiso.net/" target="_blank" rel="noopener">⬇️ Скачать UltraISO</a>
+      <a class="btn ghost" href="#hub">← Все инструкции</a>
+      <a class="btn ghost" href="/">🛒 В магазин</a>
+    </div>
+  </div>
+
+  <!-- ================= WINPE ================= -->
+  <div class="page" id="page-winpe">
+    <header class="hero">
+      <span class="badge">UKeys · Инструкции</span>
+      <h1>Запись образа WinPE на флешку через UltraISO (режим HDD)</h1>
+      <p>Для загрузочных сборок WinPE, реаниматоров и диагностических образов.</p>
+    </header>
+
+    <nav class="toc"><h2>Содержание</h2><ol>
+      <li><a onclick="scrollToStep('w-need')">Что понадобится</a></li>
+      <li><a onclick="scrollToStep('w-step1')">Запуск UltraISO от администратора</a></li>
+      <li><a onclick="scrollToStep('w-step2')">Открытие ISO-образа</a></li>
+      <li><a onclick="scrollToStep('w-step3')">Вставка флешки и окно записи</a></li>
+      <li><a onclick="scrollToStep('w-step4')">Проверка выбранной флешки</a></li>
+      <li><a onclick="scrollToStep('w-step5')">Режим записи USB-HDD+</a></li>
+      <li><a onclick="scrollToStep('w-step6')">Форматирование флешки</a></li>
+      <li><a onclick="scrollToStep('w-step7')">Начало записи</a></li>
+      <li><a onclick="scrollToStep('w-step8')">Завершение и извлечение</a></li>
+      <li><a onclick="scrollToStep('w-faq')">Частые вопросы</a></li>
+      <li><a onclick="scrollToStep('w-memo')">Короткая памятка</a></li>
+    </ol></nav>
+
+    <section class="card" id="w-need">
+      <h2><span class="step-num">✓</span> Что понадобится</h2>
+      <ul>
+        <li>Компьютер с Windows.</li>
+        <li>Программа <strong>UltraISO</strong>.</li>
+        <li>Флешка <strong>от 4–8 ГБ</strong> (зависит от сборки).</li>
+        <li>ISO-образ WinPE (вида <code>WinPE.iso</code>, <code>WinPE_x64.iso</code>).</li>
+      </ul>
+      <div class="note"><strong>⚠️ Важно:</strong> при записи все данные с флешки будут удалены.</div>
+      <div class="note"><strong>ℹ️ Если у вас папка, а не ISO:</strong> соберите ISO в UltraISO («Файл» → «Новый» → «Загрузочный образ») или используйте программу для создания загрузочных флешек.</div>
+    </section>
+
+    <section class="card" id="w-step1">
+      <h2><span class="step-num">1</span> Запустите UltraISO от имени администратора</h2>
+      <p>ПКМ по ярлыку → <strong>«Запуск от имени администратора»</strong>. При предложении — <strong>Trial</strong>.</p>
+    </section>
+
+    <section class="card" id="w-step2">
+      <h2><span class="step-num">2</span> Откройте скачанный ISO-образ</h2>
+      <p><strong>«Файл»</strong> → <strong>«Открыть…»</strong> → выберите <code>.iso</code> → «Открыть».</p>
+      <div class="ok"><strong>✅ Проверка:</strong> в дереве слева должны быть папки <code>boot</code>, <code>sources</code>, <code>EFI</code> и файл <code>bootmgr</code>.</div>
+    </section>
+
+    <section class="card" id="w-step3">
+      <h2><span class="step-num">3</span> Вставьте флешку и откройте окно записи</h2>
+      <p><strong>«Самозагрузка»</strong> → <strong>«Записать образ жёсткого диска…»</strong>.</p>
+    </section>
+
+    <section class="card" id="w-step4">
+      <h2><span class="step-num">4</span> Проверьте, что выбрана именно ваша флешка</h2>
+      <p>В <strong>«Disk Drive»</strong> — ваш USB-накопитель. Проверьте букву и объём дважды.</p>
+      <div class="shot"><div class="shot-placeholder">📷 Скриншот: выбор флешки в Write Disk Image</div></div>
+    </section>
+
+    <section class="card" id="w-step5">
+      <h2><span class="step-num">5</span> Выберите режим записи HDD</h2>
+      <p><strong>«Write Method»</strong> → <strong>USB-HDD+</strong>. Если не грузится — <strong>USB-HDD</strong> или <strong>USB-ZIP+</strong>.</p>
+      <div class="ok"><strong>✅ Для UEFI:</strong> проверьте наличие папки <code>EFI</code> и файла <code>EFI\BOOT\BOOTX64.EFI</code> в образе.</div>
+    </section>
+
+    <section class="card" id="w-step6">
+      <h2><span class="step-num">6</span> Отформатируйте флешку (рекомендуется)</h2>
+      <p><strong>«Format»</strong> → FAT32 (до 4 ГБ) или NTFS (крупные сборки) → «Start».</p>
+    </section>
+
+    <section class="card" id="w-step7">
+      <h2><span class="step-num">7</span> Начните запись</h2>
+      <p><strong>«Write»</strong> → «Да». Обычно <strong>2–10 минут</strong>. Не вынимайте флешку.</p>
+    </section>
+
+    <section class="card" id="w-step8">
+      <h2><span class="step-num">8</span> Дождитесь сообщения об успехе</h2>
+      <p><strong>«Burn Success»</strong> → «Return» → закрыть → безопасно извлечь.</p>
+      <div class="ok"><strong>✅ Проверка:</strong> на флешке должны быть <code>boot</code>, <code>sources</code>, <code>EFI</code> и <code>bootmgr</code>.</div>
+    </section>
+
+    <section class="card" id="w-faq">
+      <h2><span class="step-num">?</span> Частые вопросы</h2>
+      <div class="faq-item"><h3>Флешка не видна в UltraISO</h3><p>Смените порт, запустите UltraISO от администратора.</p></div>
+      <div class="faq-item"><h3>Ошибка при записи</h3><p>Смените порт, отключите антивирус, перекачайте ISO.</p></div>
+      <div class="faq-item"><h3>Не грузится с флешки</h3><p>Проверьте порядок загрузки в BIOS/UEFI. Попробуйте режим USB-HDD.</p></div>
+      <div class="faq-item"><h3>WinPE загрузился, но не видит диск/сеть</h3><p>В сборке нет нужных драйверов (SATA/NVMe, Wi-Fi). Используйте сборку с драйверами под ваше железо.</p></div>
+      <div class="faq-item"><h3>В UEFI не грузится, а в Legacy — да</h3><p>Проверьте наличие <code>EFI\BOOT\BOOTX64.EFI</code>. Включите UEFI (или UEFI+Legacy), отключите Secure Boot на время загрузки.</p></div>
+      <div class="faq-item"><h3>Флешка определяется как CD-ROM / только для чтения</h3><p>Флешка с аппаратным контроллером (U3). Попробуйте другую флешку.</p></div>
+    </section>
+
+    <section class="memo" id="w-memo">
+      <h2>Короткая памятка</h2>
+      <ol>
+        <li>UltraISO → от администратора → Trial.</li>
+        <li>Файл → Открыть → выбрать ISO.</li>
+        <li>Самозагрузка → Записать образ жёсткого диска.</li>
+        <li>Выбрать флешку (проверить букву и объём!).</li>
+        <li>Режим: <code>USB-HDD+</code>.</li>
+        <li>Format → Write → ждать → готово.</li>
+              </ol>
+    </section>
+  </div><!-- /page-winpe -->
+
+  <!-- (по желанию) сюда можно добавить page-windows и page-linux -->
+
+  <footer>
+    <p>© UKeys · <a href="#hub">Все инструкции</a> · <a href="/">Магазин</a></p>
+  </footer>
+</div><!-- /wrap -->
+
+<script>
+(function(){
+  const pages  = document.querySelectorAll('.page');
+  const crumbs = document.getElementById('crumbs');
+  const titles = { hub:'Инструкции', kali:'Kali Linux', winpe:'WinPE',
+                   windows:'Windows 10 / 11', linux:'Ubuntu / Linux Mint' };
+
+  function show(id){
+    id = (id || 'hub').replace('#','') || 'hub';
+    const target = document.getElementById('page-' + id) ||
+                   document.getElementById('page-hub');
+    pages.forEach(p => p.classList.remove('active'));
+    target.classList.add('active');
+    window.scrollTo({top:0});
+    if (id === 'hub' || !titles[id]) {
+      crumbs.innerHTML = '<span>Главная</span>';
+      document.title = 'Инструкции — UKeys';
+    } else {
+      crumbs.innerHTML = '<a href="#hub">Инструкции</a><span class="sep">›</span><span>' +
+                         titles[id] + '</span>';
+      document.title = titles[id] + ' — UKeys';
+    }
+  }
+  show(location.hash);
+  window.addEventListener('hashchange', () => show(location.hash));
+
+  const btn  = document.getElementById('themeToggle');
+  const html = document.documentElement;
+  const saved = localStorage.getItem('theme') || 'dark';
+  html.setAttribute('data-theme', saved);
+  btn.textContent = saved === 'dark' ? '☀️ Светлая тема' : '🌙 Тёмная тема';
+  btn.addEventListener('click', () => {
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    btn.textContent = next === 'dark' ? '☀️ Светлая тема' : '🌙 Тёмная тема';
+  });
+
+  window.scrollToStep = function(id){
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+  };
+})();
+</script>
+</body>
+</html>

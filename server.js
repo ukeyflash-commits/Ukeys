@@ -730,7 +730,7 @@ app.post('/api/chat', async (req, res) => {
 
 // 11.6 Главная страница
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'order.html'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // ------------------------------------------------------------

@@ -35,7 +35,7 @@
             content: "";
             position: fixed;
             inset: -40px;
-            background: url("../img/FON1.jpg") center/cover no-repeat fixed;
+            background: url("/img/FON1.jpg") center/cover no-repeat fixed;
             filter: blur(14px) brightness(0.65) saturate(1.2);
             transform: scale(1.08);
             z-index: -2;
@@ -734,11 +734,14 @@
 }
 
 .site-footer__line {
-    color: rgba(255, 255, 255, 0.45);   /* серый */
+    color: rgba(255, 255, 255, 0.45);
     font-size: 0.72rem;
     line-height: 1.6;
-    margin-bottom: 8px;
+    margin: 0 auto 8px auto;
     letter-spacing: 0.2px;
+    max-width: 85%;
+    text-align: justify;
+    text-align-last: center;
 }
 
 .site-footer__line a {
@@ -879,11 +882,11 @@
     const products = [
         {
             id: 1,
-            name: "UKey быстрый старт",
+            name: "Ukey start",
             price: 1500,
             category: "usb",
             emoji: "💻",
-            video: "../img/key1.mp4",//ВИДЕО ДЛЯ ТОВАРА
+            video: "/img/key1.mp4",//ВИДЕО ДЛЯ ТОВАРА
             desc: "Загрузочная флешка для быстрого восстановления вашей системы",
             longDesc: "Универсальный загрузочный ключ на базе PE. Позволяет загрузить компьютер даже при полностью нерабочей системе и восстановить доступ к данным, сбросить любые пароли, вылечить вирусы и переустановить Windows.",
             features: [
@@ -908,7 +911,7 @@
             price: 2500,
             category: "usb",
             emoji: "⚡",
-            video: "../img/nindza.mp4",
+            video: "/img/nindza.mp4",
             desc: "Профессиональная версия WinPE с расширенным софтом",
             longDesc: "Расширенная версия Ukey Win PE с профессиональным набором утилит для восстановления данных, ремонта жёстких дисков, разметки разделов, клонирования систем и глубокой диагностики. Идеальна для сервисных центров.",
             features: [
@@ -930,13 +933,13 @@
 
         {
             id: 2,
-            name: "UKey Kalinux",
-            price: 1000,
+            name: "Побробные инструкции",
+            price: 1,
             category: "usb",
             emoji: "🐧",
-            video: "../img/kali.mp4",
-            desc: "Загрузочная флешка с Kali Linux для тестов на проникновение",
-            longDesc: "Профессиональный дистрибутив Kali Linux на загрузочной флешке. Полный набор инструментов для пентеста, аудита безопасности, тестирования Wi-Fi и анализа сетей. Запускается прямо с флешки, не затрагивая основную систему.",
+            video: "/img/kali.mp4",
+            desc: "",
+            longDesc: "Подробные инструкции по всем методам установки.",
             features: [
                 "Более 600 инструментов для пентеста",
                 "Тестирование Wi-Fi и сетей",
@@ -949,7 +952,7 @@
                 "Объём": "от 16 ГБ",
                 "Интерфейс": "USB 3.0",
                 "Формат": "Загрузочный (UEFI + Legacy)",
-                "Для кого": "Пентестеры, Интересующиеся люди, специалисты по безопасности"
+                "Для кого": "Для всех "
             }
         },
 
@@ -996,32 +999,45 @@
     // ========================================
     // ФУНКЦИИ МАГАЗИНА этот класс овечет class="product-image(product-image ----видео там на карточку берётся из ${product.id})
     // ========================================
+function displayProducts() {
+    const grid = document.getElementById("productsGrid");
+    const filteredProducts = currentFilter === "all"
+        ? products.slice(0, 3)
+        : products.filter(p => p.category === currentFilter);
 
-    function displayProducts() {
-        const grid = document.getElementById("productsGrid");
-        const filteredProducts = currentFilter === "all"
-            ? products.slice(0, 3)
-            : products.filter(p => p.category === currentFilter);
+    grid.innerHTML = filteredProducts.map(product => `
+        <div class="product-card">
+            <div class="product-image" onclick="showProductDetails(${product.id})">
+                <video autoplay loop muted playsinline>
+                    <source src="${product.video}" type="video/mp4">
+                </video>
+            </div>
+            <div class="product-info">
+                <div class="product-title">${product.name}</div>
+                <div class="product-price">${product.price.toLocaleString('ru-RU')} ₽</div>
+                <div class="product-desc">${product.desc}</div>
 
-        grid.innerHTML = filteredProducts.map(product => `
-            <div class="product-card">
-                <div class="product-image" onclick="showProductDetails(${product.id})"><video autoplay loop muted playsinline><source src="${product.video}" type="video/mp4"></video></div>
-                <div class="product-info">
-                    <div class="product-title">${product.name}</div>
-                    <div class="product-price">${product.price.toLocaleString('ru-RU')} ₽</div>
-                    <div class="product-desc">${product.desc}</div>
-                    <div class="product-actions">
-                        <button class="btn-details" onclick="showProductDetails(${product.id})">
-                            📖 Подробнее
-                        </button>
-                        <button class="add-to-cart" onclick="addToCart(${product.id})">
-                            🛒 В корзину
-                        </button>
-                    </div>
+                <div class="product-actions">
+                    ${product.id !== 2 ? `
+                    <button class="btn-details" onclick="showProductDetails(${product.id})">
+                        📖 Подробнее
+                    </button>
+                    <button class="add-to-cart" onclick="addToCart(${product.id})">
+                        🛒 В корзину
+                    </button>
+                    ` : ""}
+                    
+                    ${product.id === 2 ? `
+                    <a href="/guides.html" class="btn-details"
+                       style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;flex:1;">
+                        📚 Подробные инструкции
+                    </a>` : ""}
                 </div>
             </div>
-        `).join("");
-    }
+        </div>
+    `).join("");
+}
+
 
     function filterProducts(category) {
         currentFilter = category;
@@ -1322,12 +1338,12 @@ function addToCart(productId) {
 <footer class="site-footer">
     <div class="site-footer__inner">
         <p class="site-footer__line">
-            © 2026 UKeys.
-                  Все права принадлежат G.Emil и  защищены.
-                 Информация на сайте не является публичной офертой.
+            © 2026 UKeys.</p>
+               <p class="site-footer__line">Все права принадлежат G.Emil и  защищены.</p>
+               <p class="site-footer__line">  Информация на сайте не является публичной офертой.
         </p>
         <p class="site-footer__line">
-            Используя наш сайт вы соглашаетесь<a href="/privacy.html">политикой конфиденциальности</a>.
+            Используя наш сайт вы соглашаетесь <a href="/privacy.html"> политикой конфиденциальности </a>.
         </p>
         <p class="site-footer__line">
             Товар предназначен для восстановления работоспособности компьютеров и извлечения информации с поврежденных систем.
