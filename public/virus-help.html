@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🦠 Лечение вирусов | UKeys</title>
+
+    <!-- ===== ВАШИ СТИЛИ (СКОПИРОВАНЫ С ГЛАВНОЙ) ===== -->
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --accent: #f8604a;
+            --accent-2: #8341ef;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.22);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+            --text-soft: rgba(255, 255, 255, 0.72);
+            --good: #4ade80;
+            --danger: #ef4444;
+        }
+
+        html, body {
+            min-height: 100%;
+            font-family: 'YS Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* ФОН */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: -40px;
+            background: url("/img/FON1.jpg") center/cover no-repeat fixed;
+            filter: blur(14px) brightness(0.65) saturate(1.2);
+            transform: scale(1.08);
+            z-index: -2;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(248, 96, 74, 0.25), transparent 45%),
+                radial-gradient(circle at 80% 80%, rgba(131, 65, 239, 0.3), transparent 50%),
+                linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.55));
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* ШАПКА */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(20, 20, 30, 0.55);
+            backdrop-filter: blur(20px) saturate(160%);
+            border-bottom: 1px solid rgba(255,255,255,0.14);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .logo {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
+        }
+
+        .dropdown { position: relative; display: inline-block; }
+        .dropbtn {
+            background: linear-gradient(135deg, rgba(248,96,74,0.9), rgba(131,65,239,0.9));
+            color: white;
+            padding: 11px 22px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.22);
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            min-width: 220px;
+            background: rgba(28, 28, 40, 0.92);
+            backdrop-filter: blur(20px) saturate(160%);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 14px;
+            padding: 6px;
+            z-index: 200;
+        }
+        .dropdown:hover .dropdown-content,
+        .dropdown.active .dropdown-content { display: block; }
+        .dropdown-content a {
+            display: block;
+            color: rgba(255,255,255,0.88);
+            padding: 11px 16px;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 0.88rem;
+        }
+        .dropdown-content a:hover {
+            background: linear-gradient(135deg, rgba(248,96,74,0.35), rgba(131,65,239,0.35));
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.6rem;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cart-count {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: white;
+            border-radius: 50%;
+            min-width: 22px;
+            height: 22px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* КОНТЕЙНЕР И ЗАГОЛОВОК */
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: clamp(1.5rem, 3vw, 2.1rem);
+            font-weight: 800;
+            text-align: center;
+            background: linear-gradient(90deg, #fff, #ffe0da, #cbb6ff, #fff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: shine 6s linear infinite;
+        }
+        @keyframes shine { to { background-position: 200% center; } }
+
+        /* СТЕКЛЯННАЯ КАРТОЧКА ДЛЯ ЗАГРУЗКИ */
+        .scan-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 22px;
+            padding: 40px 30px;
+            backdrop-filter: blur(20px) saturate(160%);
+            box-shadow: var(--glass-shadow);
+            text-align: center;
+        }
+
+        .scan-card p {
+            color: var(--text-soft);
+            margin-bottom: 25px;
+            font-size: 1rem;
+        }
+
+        /* ЗОНА ЗАГРУЗКИ (как в вашем коде, но в стиле сайта) */
+        .upload-box {
+            border: 2px dashed rgba(255,255,255,0.4);
+            padding: 40px;
+            border-radius: 16px;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            background: rgba(0,0,0,0.15);
+        }
+
+        .upload-box:hover {
+            border-color: var(--accent);
+            background: rgba(248, 96, 74, 0.1);
+        }
+
+        input[type="file"] { display: none; }
+
+        .upload-box span {
+            font-size: 1.1rem;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* КНОПКА ПРОВЕРКИ */
+        button[type="submit"] {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            box-shadow: 0 6px 18px rgba(248,96,74,0.4);
+            transition: all 0.25s ease;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(248,96,74,0.55);
+        }
+
+        /* СТАТУС */
+        #status {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1rem;
+            color: var(--text-soft);
+            min-height: 24px;
+        }
+
+        /* ФУТЕР */
+        .site-footer {
+            margin-top: 60px;
+            padding: 30px 20px 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+        .site-footer__line { color: rgba(255, 255, 255, 0.45); font-size: 0.72rem; margin-bottom: 8px; }
+        .site-footer__thanks { margin-top: 16px; color: rgba(255, 255, 255, 0.55); font-size: 0.78rem; font-weight: 600; }
+
+        @media (max-width: 768px) {
+            .nav-container { justify-content: center; }
+            .logo { flex: 1 1 100%; justify-content: center; }
+            .scan-card { padding: 25px 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ШАПКА -->
+    <div class="header">
+        <div class="nav-container">
+            <a href="/" class="logo">💻 <span>UKey's</span> решения под любые задачи</a>
+            <div class="dropdown">
+                <button class="dropbtn">📂 Каталог ▼</button>
+                <div class="dropdown-content">
+                    <a href="/">📱 Все товары</a>
+                    <a href="/antivirus.html">🛡️ Антивирус</a>
+                    <a href="/virus-help.html">🦠 Лечение вирусов</a>
+                    <a href="/soft_kali_full.html">🎧 Kali_linux</a>
+                    <a href="/soft_kali_gl.html">💿 Kali_review</a>
+                </div>
+            </div>
+            <div class="cart-icon" onclick="window.location.href='/'">
+                🛒 <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
+    <div class="container">
+        <h1>🦠 Лечение вирусов</h1>
+
+        <div class="scan-card">
+            <p>Загрузите файл для проверки антивирусом Dr.Web. Мы проверим его на наличие угроз и сообщим результат.</p>
+
+            <form action="/api/scan" method="POST" enctype="multipart/form-data" id="uploadForm">
+                <label for="file-upload" class="upload-box" id="drop-zone">
+                    <span id="file-name">Нажмите, чтобы выбрать файл</span>
+                </label>
+                <input id="file-upload" type="file" name="virusFile" required>
+
+                <button type="submit">Проверить на вирусы</button>
+            </form>
+
+            <div id="status"></div>
+        </div>
+    </div>
+
+    <!-- ФУТЕР -->
+    <footer class="site-footer">
+        <p class="site-footer__line">© 2026 UKeys. Все права принадлежат G.Emil и защищены.</p>
+        <p class="site-footer__line">Информация на сайте не является публичной офертой.</p>
+        <p class="site-footer__thanks">💛 Универсальные Ключи UKeys 💛</p>
+    </footer>
+
+    <!-- ===== ВАШ СКРИПТ (БЕЗ ИЗМЕНЕНИЙ) ===== -->
+    <script>
+        // Отображение имени файла
+        const fileInput = document.getElementById('file-upload');
+        const fileNameDisplay = document.getElementById('file-name');
+
+        fileInput.addEventListener('change', function() {
+            if (this.files && this.files.length > 0) {
+                fileNameDisplay.textContent = 'Выбран файл: ' + this.files[0].name;
+            }
+        });
+
+        // AJAX отправка формы
+        document.getElementById('uploadForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const statusDiv = document.getElementById('status');
+
+            statusDiv.textContent = '⏳ Загрузка файла на сервер...';
+            statusDiv.style.color = 'rgba(255,255,255,0.7)';
+
+            try {
+                const response = await fetch('/api/scan', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                statusDiv.textContent = result.message;
+                statusDiv.style.color = result.success ? '#4ade80' : '#ef4444'; // Зелёный или красный
+            } catch (error) {
+                statusDiv.textContent = '❌ Ошибка при отправке файла.';
+                statusDiv.style.color = '#ef4444';
+            }
+        });
+    </script>
+
+</body>
+</html>

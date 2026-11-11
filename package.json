@@ -19,6 +19,8 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "form-data": "^4.0.6",
+    "multer": "^2.5.0",
     "nodemailer": "^9.0.3",
     "openai": "^7.5.0",
     "qwen-proxy": "^1.1.0",
