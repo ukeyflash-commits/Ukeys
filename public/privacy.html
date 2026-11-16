@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Политика конфиденциальности | ukeyflash.ru </title>
+    <style>
+        /* Базовые настройки и сброс */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-color: #0b0e14;
+            --card-bg: #141823;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent-gradient: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+            --accent-color: #a855f7;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            /* Легкий фоновый градиент для глубины */
+            background-image: radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.08), transparent 25%),
+                              radial-gradient(circle at 85% 30%, rgba(168, 85, 247, 0.08), transparent 25%);
+        }
+
+        /* Шапка (в стиле минималистичных лендингов) */
+        header {
+            padding: 24px 20px;
+            display: flex;
+            justify-content: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(11, 14, 20, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            cursor: default;
+        }
+
+        /* Основной контент */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .privacy-card {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Неоновая полоска сверху карточки */
+        .privacy-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent-gradient);
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .icon-wrapper {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(168, 85, 247, 0.1);
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .privacy-text {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.03);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .privacy-text p {
+            margin-bottom: 15;
+        }
+
+        .privacy-text strong {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+/*ОТСТУПЫ для маркеров списка*/
+        .privacy-text ul {
+        margin-bottom: 15px;
+        padding-left: 20px;
+        }
+
+        .privacy-text li {
+        margin-bottom: 8px;
+        }
+        /* Подвал */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 0.9rem;
+            color: #475569;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Адаптивность */
+        @media (max-width: 480px) {
+            .privacy-card {
+                padding: 25px;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+            .privacy-text {
+                font-size: 1rem;
+                padding: 16px;
+            }
+        }
+    </style>
+    <!-- Подключаем шрифт Inter для максимального сходства с современными IT-сайтами -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <span class="logo">ukeyflash.ru</span>
+    </header>
+
+    <main>
+        <div class="privacy-card">
+            <div class="icon-wrapper">
+                <!-- Иконка щита (SVG) -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+            </div>
+
+            <h1>Политика конфиденциальности</h1>
+
+            <div class="privacy-text">
+                <p><em>Дата последнего обновления: 16 ноября 2026 г. </em></p>
+                <h3>1.Общие положения</h3>
+                <p>Настоящая Политика конфиденциальности (далее — Политика) действует в отношении всей информации, которую сайт ukeyflash.ru (далее — Сайт) может получить о Пользователе во время использования Сайта.Использование Сайта означает безоговорочное согласие Пользователя с настоящей Политикой и указанными в ней условиями обработки его информации.</p>
+
+<h3>2. Какие данные собирает Сайт</h3>
+<p>Сайт может собирать следующие типы данных:</p>
+<ul>
+<li><strong>Технические данные (собираются автоматически):</strong> IP-адрес, данные о браузере и устройстве, файлы cookie, информация о времени и страницах посещения. Эти данные используются исключительно для обеспечения корректной работы Сайта, защиты от атак и сбора общей статистики.</li>
+<li>Данные, предоставляемые Пользователем добровольно:</strong> контактные данные (имя, email, телефон), если Пользователь оставляет их через формы обратной связи, чат или при оформлении заказа на Сайте.</li>
+</ul>
+
+<h3>3.Цели обработки данных</h3>
+<p>Информация Пользователя используется в следующих целях:</p>
+<ul>
+<li> Обеспечение работоспособности Сайта и его защиты.</li>
+ <li>Обратная связь с Пользователем и ответы на запросы.</li>
+ <li>Предоставление доступа к приобретенным цифровым материалам или инструкциям.</li>
+ <li>Проведение платежей и отправка чеков (если применимо).</li>
+</ul>
+<h3>4. Передача данных третьим лицам</h3>
+<p>Администрация Сайта не продает и не передает персональные данные третьим лицам, за исключением случаев, предусмотренных законодательством РФ, а также в целях:</p>
+<ul>
+<li>Обработки платежей (платежные данные передаются исключительно платежным агрегаторам).</li>
+<li> Обеспечения работы аналитических сервисов (например, Яндекс.Метрика), которые собирают обезличенные технические данные.</li>
+
+<h3>5. Защита информации</h3>
+<p>Администрация Сайта принимает необходимые меры для защиты персональной информации Пользователя от неправомерного доступа, уничтожения, изменения или распространения. Сайт использует защищенный протокол передачи данных (HTTPS).</p>
+
+<h3>6. Права пользователя</h3>
+<p>Пользователь имеет право запросить информацию об обработке его данных, а также потребовать их удаления. Для этого необходимо связаться с Администрацией Сайта по контактам, указанным в футере.</p>
+
+<h3>7. Заключительные положения</h3>
+<p>Администрация Сайта вправе вносить изменения в настоящую Политику. Новая редакция вступает в силу с момента ее размещения на Сайте.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2027 ukeyflash.ru. Все права защищены.
+    </footer>
+
+</body>
+</html>
