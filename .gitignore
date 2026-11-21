@@ -12,3 +12,6 @@ gangster@*
 *.save*
 server_do_QR_versia2.js
 public/html/
+*.zip
+*.rar
+*.7z
