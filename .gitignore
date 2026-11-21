@@ -11,3 +11,4 @@ gangster@*
 *.bak*
 *.save*
 server_do_QR_versia2.js
+public/html/

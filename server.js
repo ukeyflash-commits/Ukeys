@@ -78,16 +78,22 @@ const DOWNLOAD_LINK_TTL_DAYS = 7; // единый срок: токен = пис�
 // ── Basic Auth для админки ────────────────добавил  ночью────────────────
 const ADMIN_USER = process.env.ADMIN_USER || 'gangster';
 
-let ADMIN_PASS = process.env.ADMIN_PASS;
-if (!ADMIN_PASS) {
-    // dev-пароль разрешён ТОЛЬКО если явно сказали "я разработчик"
-    if (process.env.ALLOW_DEV_PASS === 'yes') {
-        ADMIN_PASS = 'ChangeMe123';
-        console.warn('⚠️  DEV-режим: используется ChangeMe123. НЕ для продакшена!');
-    } else {
-        throw new Error('ADMIN_PASS не задан в окружении! Приложение остановлено.');
-    }
-}
+const ADMIN_PASS = process.env.ADMIN_PASS;
+ if(!ADMIN_PASS) throw new Error('ADMIN_PASS не задан в окружении .env!Приложение остановлено.');
+
+
+
+
+// let ADMIN_PASS = process.env.ADMIN_PASS;
+// if (!ADMIN_PASS) {
+//     // dev-пароль разрешён ТОЛЬКО если явно сказали "я разработчик"
+//     if (process.env.ALLOW_DEV_PASS === 'yes') {
+//         ADMIN_PASS = 'ChangeMe123';
+//         console.warn('⚠️  DEV-режим: используется ChangeMe123. НЕ для продакшена!');
+//     } else {
+//         throw new Error('ADMIN_PASS не задан в окружении! Приложение остановлено.');
+//     }
+// }
 
 function checkAuth(req, res, next) {
     const header = req.headers.authorization || '';
@@ -211,7 +217,7 @@ Email: ukeyflash@gmail.com
 
 # Правила ответа
 1. Потеря данных — предложи Ukey PE или Proy.
-2. Проверка безопасности сети — предложи Kali Linux.
+2. Проверка безопасности сети — предложи PRO.
 3. Уточняй ОС клиента (Windows/Mac) и суть проблемы.
 4. Не выдумывай функции, которых нет в описании товаров.`;
 
