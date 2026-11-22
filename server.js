@@ -208,9 +208,9 @@ const SYSTEM_PROMPT = `Вы — вежливый и опытный консул�
 Мы продаём готовые решения для восстановления систем и спасения данных.
 
 ## Товары
-- Ukey  PE — 1500 ₽ (восстановление Windows, сброс паролей, тесты памяти)
+- Ukey CORE — 1500 ₽ (восстановление Windows, сброс паролей, тесты памяти)
 - Ukey Kali Linux — 1000 ₽ (пентест, восстановление данных, проверка безопасности сети)
-- Ukey  PE Pro — 2500 ₽ (расширенный набор: глубокое восстановление файлов, антивирусные сканеры, UEFI)
+- Ukey PE Pro — 2500 ₽ (расширенный набор: глубокое восстановление файлов, антивирусные сканеры, UEFI)
 
 ## Контакты
 Email: ukeyflash@gmail.com
@@ -520,7 +520,7 @@ async function sendOrderEmails(orderData) {
 app.get('/api/info', (req, res) => {
     res.json({
         products: [
-            { name: 'Ukey Windows PE',     price: 1500, file: 'ukey_winpe.iso', video:'../img/key1.mp4'   },
+            { name: 'Ukey CORE',     price: 1500, file: 'ukey_winpe.iso', video:'../img/key1.mp4'   },
             { name: 'Ukey Kali Linux',     price: 1000, file: 'ukey_kali.iso', video:'../img/kali.mp4'    },
             { name: 'Ukey Windows PE Pro', price: 2500, file: 'ukey_winpe_pro.iso',video:'../img/nindza.mp4' },
         ],
@@ -738,6 +738,8 @@ app.post('/api/chat', async (req, res) => {
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+
+
 
 // ------------------------------------------------------------
 // 12. ЗАПУСК
