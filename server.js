@@ -40,22 +40,22 @@ const path       = require('path');
 const fs         = require('fs');
 const crypto     = require('crypto');
 const Database   = require('better-sqlite3');
-const OpenAI     = require('openai');
-//НОВЫЙ МОДУЛЬ ДЛЯ отправки ПИСЕМ
+const { ChatBot } = require('chatbotlite/client');
+const { knowledgeFromFile } = require('chatbotlite/node');
+
 //ДОБАВЛЕНИЕ ЗАЩИТЫ АДМИН ПАНЕЛИ admin.html
 //
-
-
-
 
 // ------------------------------------------------------------
 // 1.5. ДИАГНОСТИКА ПЕРЕМЕННЫХ ОКРУЖЕНИЯ
 // ------------------------------------------------------------
 console.log('🔍 [ENV] EMAIL_PASSWORD задан:', !!process.env.EMAIL_PASSWORD);
 console.log('🔍 [ENV] PORT:', process.env.PORT || '(по умолчанию 3000)');
-console.log('🔍 [ENV] AI_API_KEY задан:', !!process.env.AI_API_KEY);
-console.log('🔍 [ENV] AI_BASE_URL:', process.env.AI_BASE_URL || '(по умолчанию OpenAI)');
 console.log('🔍 [ENV] .env путь:', path.join(__dirname, '.env'), '| существует:', fs.existsSync(path.join(__dirname, '.env')));
+console.log('🔍 [ENV] DEEPSEEK_API_KEY задан:', !!process.env.DEEPSEEK_API_KEY);
+
+
+
 
 // ------------------------------------------------------------
 // 2. ИНИЦИАЛИЗАЦИЯ ПРИЛОЖЕНИЯ
@@ -195,31 +195,53 @@ console.log('💳 [v2.1.0] Robokassa ОТКЛЮЧЕНА (ЗАГЛУШКА ОПЛ
 // ------------------------------------------------------------
 // 7. ИИ-КЛИЕНТ
 // ------------------------------------------------------------
-const aiClient = new OpenAI({
-    apiKey:  process.env.AI_API_KEY  || 'dummy-key',
-    baseURL: process.env.AI_BASE_URL || 'https://api.openai.com/v1',
-});
 
-const SYSTEM_PROMPT = `Вы — вежливый и опытный консультант магазина UKeys.
-Помогайте клиентам с выбором загрузочных флешек для спасения данных и восстановления систем.
-Отвечайте кратко, по делу, с лёгким дружелюбным тоном.
 
-# Информация о магазине
-Мы продаём готовые решения для восстановления систем и спасения данных.
+// const SYSTEM_PROMPT = `Вы — вежливый и опытный консультант магазина UKeys.
+// Помогайте клиентам с выбором загрузочных флешек для спасения данных и восстановления систем.
+// Отвечайте кратко, по делу, с лёгким дружелюбным тоном.
+//
+// # Информация о магазине
+// Мы продаём готовые решения для восстановления систем и спасения данных.
+//
+// ## Товары
+// - Ukey CORE — 1500 ₽ (восстановление Windows, сброс паролей, тесты памяти)
+// - Ukey Kali Linux — (пентест, восстановление данных, проверка безопасности сети)
+// - Ukey PE Pro — 2500 ₽ (расширенный набор: глубокое восстановление файлов, антивирусные сканеры, UEFI)
+//
+// ## Контакты
+// Email: ukeyflash@gmail.com
+//
+// # Правила ответа
+// 1. Потеря данных — предложи Ukey PE или Proy.
+// 2. Проверка безопасности сети — предложи PRO.
+// 3. Уточняй ОС клиента (Windows/Mac) и суть проблемы.
+// 4. Не выдумывай функции, которых нет в описании товаров.`;
 
-## Товары
-- Ukey CORE — 1500 ₽ (восстановление Windows, сброс паролей, тесты памяти)
-- Ukey Kali Linux — 1000 ₽ (пентест, восстановление данных, проверка безопасности сети)
-- Ukey PE Pro — 2500 ₽ (расширенный набор: глубокое восстановление файлов, антивирусные сканеры, UEFI)
+// --- НОВЫЙ БЛОК: Инициализация ChatbotLite ---
 
-## Контакты
-Email: ukeyflash@gmail.com
-
-# Правила ответа
-1. Потеря данных — предложи Ukey PE или Proy.
-2. Проверка безопасности сети — предложи PRO.
-3. Уточняй ОС клиента (Windows/Mac) и суть проблемы.
-4. Не выдумывай функции, которых нет в описании товаров.`;
+let chatBotLite = null;
+try {
+    chatBotLite = new ChatBot({
+        knowledge: knowledgeFromFile("./knowledge.md"),
+                              providers: {
+                                  keys: {
+                                      custom: process.env.SELECTEL_API_KEY,
+                                  },
+                                  chain: [
+                                      {
+                                          provider: "custom",
+                                          baseUrl: process.env.SELECTEL_BASE_URL,  // https://api.tf.selcloud.ru/v1
+                                          model: process.env.SELECTEL_MODEL,        // скопированный вами ID модели
+                                          apiKey: process.env.SELECTEL_API_KEY
+                                      }
+                                  ]
+                              },
+    });
+    console.log('✅ [ChatbotLite] Бот успешно инициализирован (TokenFActory).');
+} catch (e) {
+    console.error('❌ [ChatbotLite] Ошибка инициализации:', e.message);
+}
 
 // ------------------------------------------------------------
 // 8. ПОЧТА
@@ -696,43 +718,97 @@ app.get('/api/download/:token', (req, res) => {
     fs.createReadStream(filePath).pipe(res);
 });
 
-// 11.5 Чат-бот (SSE)
+// 11.5 Чат-бот (SSE) через ChatbotLite FRESHHHHHHH!!!!!!!!!!!!!!!!!
 app.post('/api/chat', async (req, res) => {
     try {
         const { message, transcript } = req.body;
-        console.log('📩 [v2.1.0] Сообщение в чат:', message);
+        console.log('📩 [ChatbotLite] Сообщение в чат:', message);
 
-        const messages = [{ role: 'system', content: SYSTEM_PROMPT }];
-        if (Array.isArray(transcript)) {
-            for (const msg of transcript) {
-                if (msg.role && msg.content) messages.push({ role: msg.role, content: msg.content });
-            }
+        if (!chatBotLite) {
+            return res.status(500).json({ error: 'Чат-бот не инициализирован' });
         }
-        messages.push({ role: 'user', content: message });
 
+        // Настраиваем заголовки для стриминга (SSE)
         res.setHeader('Content-Type', 'text/event-stream');
         res.setHeader('Cache-Control', 'no-cache');
         res.setHeader('Connection', 'keep-alive');
 
-        const stream = await aiClient.chat.completions.create({
-            model:       process.env.AI_MODEL || 'deepseek-chat',
-            messages,
-            stream:      true,
-            temperature: 0.7,
+        // Получаем поток от ChatbotLite
+        // ВАЖНО: передаем историю в правильном формате (массив объектов)
+        const stream = await chatBotLite.replyStream(message, {
+            history: transcript || []
         });
 
+        // Пересылаем поток клиенту
         for await (const chunk of stream) {
-            const content = chunk.choices[0]?.delta?.content || '';
-            if (content) res.write(`data: ${JSON.stringify({ text: content })}\n\n`);
+            // ChatbotLite уже формирует строки в формате "data: {...}"
+            res.write(chunk);
         }
-        res.write('data: [DONE]\n\n');
+
         res.end();
     } catch (error) {
-        console.error('❌ [v2.1.0] Ошибка чат-бота:', error);
-        if (!res.headersSent) res.status(500).json({ error: 'Ошибка сервера' });
-        else res.end();
+        console.error('❌ [ChatbotLite] Ошибка чата:', error);
+        if (!res.headersSent) {
+            res.status(500).json({ error: 'Внутренняя ошибка сервера' });
+        } else {
+            res.end();
+        }
     }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // 11.5 Чат-бот (SSE)
+// app.post('/api/chat', async (req, res) => {
+//     try {
+//         const { message, transcript } = req.body;
+//         console.log('📩 [v2.1.0] Сообщение в чат:', message);
+//
+//         const messages = [{ role: 'system', content: SYSTEM_PROMPT }];
+//         if (Array.isArray(transcript)) {
+//             for (const msg of transcript) {
+//                 if (msg.role && msg.content) messages.push({ role: msg.role, content: msg.content });
+//             }
+//         }
+//         messages.push({ role: 'user', content: message });
+//
+//         res.setHeader('Content-Type', 'text/event-stream');
+//         res.setHeader('Cache-Control', 'no-cache');
+//         res.setHeader('Connection', 'keep-alive');
+//
+//         const stream = await aiClient.chat.completions.create({
+//             model:       process.env.AI_MODEL || 'deepseek-chat',
+//             messages,
+//             stream:      true,
+//             temperature: 0.7,
+//         });
+//
+//         for await (const chunk of stream) {
+//             const content = chunk.choices[0]?.delta?.content || '';
+//             if (content) res.write(`data: ${JSON.stringify({ text: content })}\n\n`);
+//         }
+//         res.write('data: [DONE]\n\n');
+//         res.end();
+//     } catch (error) {
+//         console.error('❌ [v2.1.0] Ошибка чат-бота:', error);
+//         if (!res.headersSent) res.status(500).json({ error: 'Ошибка сервера' });
+//         else res.end();
+//     }
+// });
 
 // 11.6 Главная страница
 app.get('/', (req, res) => {
@@ -747,7 +823,7 @@ app.get('/', (req, res) => {
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 [v2.1.0] Сервер запущен на http://localhost:${PORT}`);
     console.log(`📧 [v2.1.0] Уведомления на ${EMAIL_CONFIG.notifyEmail}`);
-    console.log(`🤖 [v2.1.0] ИИ подключён к: ${process.env.AI_BASE_URL || 'OpenAI'}`);
+    console.log(`Одна голова хорошо, но 🤖 🤖 [v2.1.0] ИИ подключён к: DeepSeek`);
     console.log(`🖥️  [v2.1.0] Админка: http://localhost:${PORT}/admin`);
     testEmail().catch(err => console.error('❌ [v2.1.0] testEmail:', err.message));
     setInterval(checkPaidOrders, 60 * 1000);
