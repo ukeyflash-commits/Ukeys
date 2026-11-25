@@ -1390,7 +1390,10 @@ function addToCart(productId) {
     if (window.chatbotlite && typeof window.chatbotlite.mount === "function") {
       window.chatbotlite.mount({
         endpoint: "/api/chat",
-        title: "Ukey's shop"
+        title: "Ukey's shop",
+          theme: {
+        primary: "#BC13FE"   // ваш акцентный цвет (оранжево-красный)
+      }
       });
     }
   </script>
@@ -1402,6 +1405,15 @@ function addToCart(productId) {
 </html>
 
 <!-- 
+
+Неоновый голубой: #00F0FF
+
+Неоновый фиолетовый: #BC13FE
+
+Неоновый розовый: #FF10F0
+
+
+
 ## Что добавлено 22.08.2026 ildar
 
 ### 1. Кнопка «📖 Подробнее»
