@@ -64,8 +64,10 @@
 </head>
 <body>
 
-    <h1>UKeys —наши  заказы(ИнШаАллах!)</h1>
+    <h1>UKeys — наши  заказы(ИнШаАллах!)</h1>
     <div class="sub">Кнопка «Прикрепить» доступна для заказов со статусом <b>ожидает</b> или <b>оплачен</b> без ссылки.</div>
+
+
 
     <div class="toolbar">
         <button data-filter=""          class="active">Все</button>
@@ -116,6 +118,46 @@
 // ── состояние ─────────────────────────────────────────────
 let currentFilter = '';
 let currentInvId  = null;
+
+// // ── статистика посещений ─────────────────────────────────
+// async function loadVisits() {
+//     try {
+//         const resp = await fetch('/api/admin/visits');
+//         const data = await resp.json();
+//         if (!resp.ok || !data.ok) throw new Error(data.error || 'Ошибка');
+//
+//         document.getElementById('vTotal').textContent  = data.total;
+//         document.getElementById('vToday').textContent  = data.today;
+//         document.getElementById('vUnique').textContent = data.uniqueIps;
+//
+//         // график за 7 дней
+//         const chart = document.getElementById('visitsChart');
+//         const max = Math.max(1, ...data.last7.map(d => d.c));
+//         chart.innerHTML = data.last7.map(d => {
+//             const h = Math.round((d.c / max) * 90);
+//             return `
+//                 <div style="display:flex; flex-direction:column; align-items:center; flex:1;">
+//                     <div style="font-size:11px; color:#666;">${d.c}</div>
+//                     <div style="
+//                         width:100%; max-width:36px;
+//                         height:${h}px;
+//                         background:linear-gradient(180deg,#667eea,#764ba2);
+//                         border-radius:4px 4px 0 0;
+//                     "></div>
+//                     <div style="font-size:10px; color:#999; margin-top:4px;">${d.day.slice(5)}</div>
+//                 </div>
+//             `;
+//         }).join('');
+//     } catch (e) {
+//         console.warn('❌ [visits]', e.message);
+//         document.getElementById('vTotal').textContent  = '—';
+//         document.getElementById('vToday').textContent  = '—';
+//         document.getElementById('vUnique').textContent = '—';
+//     }
+// }
+
+
+
 
 // ── загрузка списка ───────────────────────────────────────
 async function loadOrders() {
@@ -274,7 +316,9 @@ document.querySelectorAll('.toolbar button[data-filter]').forEach(btn => {
 });
 
 // ── автообновление раз в 30 сек ───────────────────────────
-setInterval(loadOrders, 30 * 1000);
+setInterval(loadOrders, 30 * 1000);//раз в минуту
+
+
 
 // ── старт ─────────────────────────────────────────────────
 loadOrders();

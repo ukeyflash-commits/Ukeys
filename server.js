@@ -70,6 +70,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
+
+
+
+
+
 // ------------------------------------------------------------
 // 3.5. КОНСТАНТЫ
 // ------------------------------------------------------------
@@ -81,6 +86,9 @@ const ADMIN_USER = process.env.ADMIN_USER || 'gangster';
 const ADMIN_PASS = process.env.ADMIN_PASS;
  if(!ADMIN_PASS) throw new Error('ADMIN_PASS не задан в окружении .env!Приложение остановлено.');
 
+// console.log('🔑 ADMIN_USER =', JSON.stringify(ADMIN_USER));
+// console.log('🔑 ADMIN_PASS =', JSON.stringify(ADMIN_PASS));
+// console.log('🔑 Длина пароля =', ADMIN_PASS ? ADMIN_PASS.length : 0);
 
 
 
@@ -97,6 +105,10 @@ const ADMIN_PASS = process.env.ADMIN_PASS;
 
 function checkAuth(req, res, next) {
     const header = req.headers.authorization || '';
+
+    console.log('🛡️ [checkAuth] path =', req.path);
+    console.log('🛡️ [checkAuth] header =', header ? header.slice(0, 40) + '...' : '(пусто)');
+
     if (!header.startsWith('Basic ')) {
         res.set('WWW-Authenticate', 'Basic realm="Admin Area"');
         return res.status(401).send('Требуется авторизация');
@@ -105,6 +117,7 @@ function checkAuth(req, res, next) {
     const idx = decoded.indexOf(':');
     const user = decoded.slice(0, idx);
     const pass = decoded.slice(idx + 1);
+
     if (user === ADMIN_USER && pass === ADMIN_PASS) return next();
     res.set('WWW-Authenticate', 'Basic realm="Admin Area"');
     return res.status(401).send('Неверный логин или пароль');
@@ -183,6 +196,10 @@ addPendingCol('status',          "TEXT DEFAULT 'ожидает'");
 addPendingCol('file_url',        'TEXT');
 addPendingCol('file_created_at', 'TEXT');
 addPendingCol('sent_to_client',  'INTEGER DEFAULT 0');
+
+
+
+
 
 console.log('🗄️ [v2.1.0] База данных SQLite подключена.');
 
@@ -691,6 +708,8 @@ app.get('/api/admin/orders', (req, res) => {
         res.status(500).json({ error: 'Ошибка сервера' });
     }
 });
+
+
 
 // 11.3 Вебхук Robokassa — ОТКЛЮЧЕНО
 /*
