@@ -544,7 +544,7 @@ app.get('/api/info', (req, res) => {
         products: [
             { name: 'Ukey CORE',     price: 1500, file: 'ukey_winpe.iso', video:'../img/key1.mp4'   },
             { name: 'Ukey Kali Linux',     price: 1000, file: 'ukey_kali.iso', video:'../img/kali.mp4'    },
-            { name: 'Ukey Windows PE Pro', price: 2500, file: 'ukey_winpe_pro.iso',video:'../img/nindza.mp4' },
+            { name: 'Ukey ULTIMATE', price: 2500, file: 'ukey_winpe_pro.iso',video:'../img/nindza.mp4' },
         ],
     });
 });
