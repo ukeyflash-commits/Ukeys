@@ -70,7 +70,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
-
+// ------------------------------------------------------------
+// 3.1 СЧЁТЧИК ПОСЕТИТЕЛЕЙ (независимый, visits.json)
+// ------------------------------------------------------------
+const { attachVisitCounter } = require('./visit-counter');
+attachVisitCounter(app);
 
 
 

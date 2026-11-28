@@ -1375,14 +1375,13 @@ function addToCart(productId) {
             Товар предназначен для восстановления работоспособности компьютеров и извлечения информации с поврежденных систем.
         </p>
         <p class="site-footer__thanks">
-           💛 Универсальные Ключи UKeys 💛
+
+     <!-- СЧЕТЧИК_НЕЗАВИСИМЫЙ-----НЕРАБОТАЕТ -->
+    <!--    <img src="/api/visits/badge" alt="Посетителей" style="height:24px; vertical-align:middle;">-->
+💛 Универсальные Ключи UKeys 💛
         </p>
     </div>
 </footer>
-
-
-
-
 
 
 
@@ -1392,7 +1391,7 @@ function addToCart(productId) {
     if (window.chatbotlite && typeof window.chatbotlite.mount === "function") {
       window.chatbotlite.mount({
         endpoint: "/api/chat",
-        title: "Задайте свой вопрос",
+        title: "Задайте ваш вопрос",
         greeting: "Чем могу вам помочь?",
           theme: {
         primary: "#BC13FE"   // ваш акцентный цвет (оранжево-красный)
@@ -1415,6 +1414,7 @@ alt=""/></a><script>(function(d,s){d.getElementById("licntBEB2").src=
 (document,screen)</script><!--/LiveInternet-->
 
 
+<script>fetch('/api/visit', { method: 'POST' }).catch(() => {});</script>
 
 </body>
 </html>
